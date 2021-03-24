@@ -302,6 +302,27 @@
           }
         }
       }
+    },
+    "shared-api-validations": {
+      "root": "libs/shared/api/validations",
+      "sourceRoot": "libs/shared/api/validations/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/shared/api/validations/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/api/validations"],
+          "options": {
+            "jestConfig": "libs/shared/api/validations/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

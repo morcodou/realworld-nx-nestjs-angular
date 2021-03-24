@@ -25,7 +25,10 @@
       "@realworld/shared/api/foundation": [
         "libs/shared/api/foundation/src/index.ts"
       ],
-      "@realworld/shared/api/config": ["libs/shared/api/config/src/index.ts"]
+      "@realworld/shared/api/config": ["libs/shared/api/config/src/index.ts"],
+      "@realworld/shared/api/validations": [
+        "libs/shared/api/validations/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
