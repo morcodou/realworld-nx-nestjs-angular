@@ -36,6 +36,7 @@
     "shared-loading": { "tags": ["scope:shared", "type:lib"] },
     "shared-logging": { "tags": ["scope:shared", "type:lib"] },
     "shared-notification": { "tags": ["scope:shared", "type:lib"] },
-    "shared-spinner": { "tags": ["scope:shared", "type:lib"] }
+    "shared-spinner": { "tags": ["scope:shared", "type:lib"] },
+    "shared-storage": { "tags": ["scope:shared", "type:lib"] }
   }
 }
