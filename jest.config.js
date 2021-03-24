@@ -8,5 +8,6 @@ module.exports = {
     '<rootDir>/libs/shared/api/foundation',
     '<rootDir>/libs/shared/api/config',
     '<rootDir>/libs/shared/api/validations',
+    '<rootDir>/libs/shared/client-server',
   ],
 };

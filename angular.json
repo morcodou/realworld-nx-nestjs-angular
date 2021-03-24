@@ -323,6 +323,27 @@
           }
         }
       }
+    },
+    "shared-client-server": {
+      "root": "libs/shared/client-server",
+      "sourceRoot": "libs/shared/client-server/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/shared/client-server/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/client-server"],
+          "options": {
+            "jestConfig": "libs/shared/client-server/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

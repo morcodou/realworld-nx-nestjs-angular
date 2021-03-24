@@ -28,6 +28,9 @@
       "@realworld/shared/api/config": ["libs/shared/api/config/src/index.ts"],
       "@realworld/shared/api/validations": [
         "libs/shared/api/validations/src/index.ts"
+      ],
+      "@realworld/shared/client-server": [
+        "libs/shared/client-server/src/index.ts"
       ]
     }
   },
