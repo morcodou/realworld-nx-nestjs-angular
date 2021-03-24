@@ -1,5 +1,5 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
-import { ErrorResponse } from '@nhaancs/shared/client-server';
+import { ErrorResponse } from '@realworld/shared/client-server';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
