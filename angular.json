@@ -515,6 +515,31 @@
           }
         }
       }
+    },
+    "shared-loading": {
+      "projectType": "library",
+      "root": "libs/shared/loading",
+      "sourceRoot": "libs/shared/loading/src",
+      "prefix": "realworld",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/loading/src/**/*.ts",
+              "libs/shared/loading/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/loading"],
+          "options": {
+            "jestConfig": "libs/shared/loading/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }
