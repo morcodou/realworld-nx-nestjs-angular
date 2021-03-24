@@ -21,5 +21,6 @@ module.exports = {
     '<rootDir>/libs/shared/notification',
     '<rootDir>/libs/shared/spinner',
     '<rootDir>/libs/shared/storage',
+    '<rootDir>/libs/shared/toaster',
   ],
 };

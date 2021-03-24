@@ -640,6 +640,31 @@
           }
         }
       }
+    },
+    "shared-toaster": {
+      "projectType": "library",
+      "root": "libs/shared/toaster",
+      "sourceRoot": "libs/shared/toaster/src",
+      "prefix": "realworld",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/toaster/src/**/*.ts",
+              "libs/shared/toaster/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/toaster"],
+          "options": {
+            "jestConfig": "libs/shared/toaster/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

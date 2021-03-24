@@ -2,7 +2,7 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ComponentRef, Injectable } from '@angular/core';
 
-import { ILoadingService } from '@nhaancs/shared/loading';
+import { ILoadingService } from '@realworld/shared/loading';
 import { ISpinnerService } from '../public/i-spinner.service';
 import { NbSpinnerComponent } from './nb-spinner.component';
 
