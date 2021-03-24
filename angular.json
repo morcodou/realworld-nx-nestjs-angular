@@ -490,6 +490,31 @@
           }
         }
       }
+    },
+    "shared-interceptors": {
+      "projectType": "library",
+      "root": "libs/shared/interceptors",
+      "sourceRoot": "libs/shared/interceptors/src",
+      "prefix": "realworld",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/interceptors/src/**/*.ts",
+              "libs/shared/interceptors/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/interceptors"],
+          "options": {
+            "jestConfig": "libs/shared/interceptors/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

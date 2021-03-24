@@ -41,7 +41,10 @@
       "@realworld/shared/error-handler": [
         "libs/shared/error-handler/src/index.ts"
       ],
-      "@realworld/shared/foundation": ["libs/shared/foundation/src/index.ts"]
+      "@realworld/shared/foundation": ["libs/shared/foundation/src/index.ts"],
+      "@realworld/shared/interceptors": [
+        "libs/shared/interceptors/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

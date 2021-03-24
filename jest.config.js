@@ -15,5 +15,6 @@ module.exports = {
     '<rootDir>/libs/shared/directives',
     '<rootDir>/libs/shared/error-handler',
     '<rootDir>/libs/shared/foundation',
+    '<rootDir>/libs/shared/interceptors',
   ],
 };
