@@ -29,6 +29,7 @@
     "shared-constants": { "tags": ["domain:shared", "type:lib"] },
     "shared-common": { "tags": ["scope:shared", "type:lib"] },
     "shared-configuration": { "tags": ["scope:shared", "type:lib"] },
-    "shared-directives": { "tags": ["scope:shared", "type:lib"] }
+    "shared-directives": { "tags": ["scope:shared", "type:lib"] },
+    "shared-error-handler": { "tags": ["scope:shared", "type:lib"] }
   }
 }

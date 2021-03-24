@@ -13,5 +13,6 @@ module.exports = {
     '<rootDir>/libs/shared/common',
     '<rootDir>/libs/shared/configuration',
     '<rootDir>/libs/shared/directives',
+    '<rootDir>/libs/shared/error-handler',
   ],
 };
