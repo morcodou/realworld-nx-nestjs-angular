@@ -281,6 +281,27 @@
           }
         }
       }
+    },
+    "shared-api-config": {
+      "root": "libs/shared/api/config",
+      "sourceRoot": "libs/shared/api/config/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/shared/api/config/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/api/config"],
+          "options": {
+            "jestConfig": "libs/shared/api/config/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

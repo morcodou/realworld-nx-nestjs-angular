@@ -22,6 +22,7 @@
     "shared-api-core": { "tags": ["scope:shared", "type:lib"] },
     "shared-api-constants": { "tags": ["scope:shared", "type:lib"] },
     "shared-api-error-handler": { "tags": ["scope:shared", "type:lib"] },
-    "shared-api-foundation": { "tags": ["scope:shared", "type:lib"] }
+    "shared-api-foundation": { "tags": ["scope:shared", "type:lib"] },
+    "shared-api-config": { "tags": ["scope:shared", "type:lib"] }
   }
 }
