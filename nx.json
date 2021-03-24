@@ -27,6 +27,7 @@
     "shared-api-validations": { "tags": ["scope:shared", "type:lib"] },
     "shared-client-server": { "tags": ["domain:shared", "type:lib"] },
     "shared-common": { "tags": ["domain:shared", "type:lib"] },
-    "shared-directives": { "tags": ["domain:shared", "type:lib"] }
+    "shared-directives": { "tags": ["domain:shared", "type:lib"] },
+    "shared-configuration": { "tags": ["domain:shared", "type:lib"] }
   }
 }

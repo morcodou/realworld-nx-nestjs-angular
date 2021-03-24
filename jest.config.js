@@ -11,5 +11,6 @@ module.exports = {
     '<rootDir>/libs/shared/client-server',
     '<rootDir>/libs/shared/common',
     '<rootDir>/libs/shared/directives',
+    '<rootDir>/libs/shared/configuration',
   ],
 };
