@@ -45,7 +45,8 @@
       "@realworld/shared/interceptors": [
         "libs/shared/interceptors/src/index.ts"
       ],
-      "@realworld/shared/loading": ["libs/shared/loading/src/index.ts"]
+      "@realworld/shared/loading": ["libs/shared/loading/src/index.ts"],
+      "@realworld/shared/logging": ["libs/shared/logging/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

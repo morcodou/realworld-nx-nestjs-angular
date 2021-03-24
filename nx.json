@@ -33,6 +33,7 @@
     "shared-error-handler": { "tags": ["scope:shared", "type:lib"] },
     "shared-foundation": { "tags": ["scope:shared", "type:lib"] },
     "shared-interceptors": { "tags": ["scope:shared", "type:lib"] },
-    "shared-loading": { "tags": ["scope:shared", "type:lib"] }
+    "shared-loading": { "tags": ["scope:shared", "type:lib"] },
+    "shared-logging": { "tags": ["scope:shared", "type:lib"] }
   }
 }

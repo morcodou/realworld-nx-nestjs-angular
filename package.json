@@ -52,6 +52,7 @@
     "@nrwl/angular": "11.5.2",
     "concurrently": "^6.0.0",
     "mysql": "^2.18.1",
+    "r7insight_js": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.0",

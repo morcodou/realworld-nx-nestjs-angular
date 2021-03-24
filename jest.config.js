@@ -17,5 +17,6 @@ module.exports = {
     '<rootDir>/libs/shared/foundation',
     '<rootDir>/libs/shared/interceptors',
     '<rootDir>/libs/shared/loading',
+    '<rootDir>/libs/shared/logging',
   ],
 };
