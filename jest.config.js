@@ -14,5 +14,6 @@ module.exports = {
     '<rootDir>/libs/shared/configuration',
     '<rootDir>/libs/shared/directives',
     '<rootDir>/libs/shared/error-handler',
+    '<rootDir>/libs/shared/foundation',
   ],
 };

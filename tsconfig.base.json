@@ -40,7 +40,8 @@
       "@realworld/shared/directives": ["libs/shared/directives/src/index.ts"],
       "@realworld/shared/error-handler": [
         "libs/shared/error-handler/src/index.ts"
-      ]
+      ],
+      "@realworld/shared/foundation": ["libs/shared/foundation/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
