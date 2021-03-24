@@ -24,9 +24,6 @@
       ],
       "@realworld/shared/api/foundation": [
         "libs/shared/api/foundation/src/index.ts"
-      ],
-      "@realworld/shared/api/validation": [
-        "libs/shared/api/validation/src/index.ts"
       ]
     }
   },

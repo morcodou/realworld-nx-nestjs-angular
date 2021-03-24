@@ -5,7 +5,6 @@ module.exports = {
     '<rootDir>/libs/shared/api/core',
     '<rootDir>/libs/shared/api/constants',
     '<rootDir>/libs/shared/api/error-handler',
-    '<rootDir>/libs/shared/api/foundation',
-    '<rootDir>/libs/shared/api/validation',
+    '<rootDir>/libs/shared/api/foundation'
   ],
 };
