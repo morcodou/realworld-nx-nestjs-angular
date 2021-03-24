@@ -18,5 +18,6 @@ module.exports = {
     '<rootDir>/libs/shared/interceptors',
     '<rootDir>/libs/shared/loading',
     '<rootDir>/libs/shared/logging',
+    '<rootDir>/libs/shared/notification',
   ],
 };

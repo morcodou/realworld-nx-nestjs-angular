@@ -565,6 +565,31 @@
           }
         }
       }
+    },
+    "shared-notification": {
+      "projectType": "library",
+      "root": "libs/shared/notification",
+      "sourceRoot": "libs/shared/notification/src",
+      "prefix": "realworld",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/notification/src/**/*.ts",
+              "libs/shared/notification/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/notification"],
+          "options": {
+            "jestConfig": "libs/shared/notification/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }
