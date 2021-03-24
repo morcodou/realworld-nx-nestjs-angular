@@ -1,6 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { ISetting } from '@realworld/setting/api-interfaces';
-import { IPolicy } from '@realworld/policy/api-interfaces';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'realworld-footer',
@@ -9,12 +7,4 @@ import { IPolicy } from '@realworld/policy/api-interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterComponent {
-  @Input()
-  setting: ISetting
-  @Input()
-  policies: IPolicy[]
-  @Input()
-  menuItems: any[]
-
-  currentYear = new Date().getFullYear()
 }
