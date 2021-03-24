@@ -12,5 +12,6 @@ module.exports = {
     '<rootDir>/libs/shared/constants',
     '<rootDir>/libs/shared/common',
     '<rootDir>/libs/shared/configuration',
+    '<rootDir>/libs/shared/directives',
   ],
 };
