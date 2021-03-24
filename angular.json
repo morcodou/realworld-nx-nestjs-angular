@@ -345,69 +345,6 @@
         }
       }
     },
-    "shared-common": {
-      "root": "libs/shared/common",
-      "sourceRoot": "libs/shared/common/src",
-      "projectType": "library",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/shared/common/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/shared/common"],
-          "options": {
-            "jestConfig": "libs/shared/common/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "shared-directives": {
-      "root": "libs/shared/directives",
-      "sourceRoot": "libs/shared/directives/src",
-      "projectType": "library",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/shared/directives/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/shared/directives"],
-          "options": {
-            "jestConfig": "libs/shared/directives/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "shared-configuration": {
-      "root": "libs/shared/configuration",
-      "sourceRoot": "libs/shared/configuration/src",
-      "projectType": "library",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/shared/configuration/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/shared/configuration"],
-          "options": {
-            "jestConfig": "libs/shared/configuration/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "shared-constants": {
       "root": "libs/shared/constants",
       "sourceRoot": "libs/shared/constants/src",
@@ -424,6 +361,31 @@
           "outputs": ["coverage/libs/shared/constants"],
           "options": {
             "jestConfig": "libs/shared/constants/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "shared-common": {
+      "projectType": "library",
+      "root": "libs/shared/common",
+      "sourceRoot": "libs/shared/common/src",
+      "prefix": "realworld",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/common/src/**/*.ts",
+              "libs/shared/common/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/common"],
+          "options": {
+            "jestConfig": "libs/shared/common/jest.config.js",
             "passWithNoTests": true
           }
         }

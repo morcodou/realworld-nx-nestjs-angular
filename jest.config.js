@@ -9,9 +9,9 @@ module.exports = {
     '<rootDir>/libs/shared/api/config',
     '<rootDir>/libs/shared/api/validations',
     '<rootDir>/libs/shared/client-server',
-    '<rootDir>/libs/shared/common',
     '<rootDir>/libs/shared/directives',
     '<rootDir>/libs/shared/configuration',
     '<rootDir>/libs/shared/constants',
+    '<rootDir>/libs/shared/common',
   ],
 };

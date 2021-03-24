@@ -32,12 +32,8 @@
       "@realworld/shared/client-server": [
         "libs/shared/client-server/src/index.ts"
       ],
-      "@realworld/shared/common": ["libs/shared/common/src/index.ts"],
-      "@realworld/shared/directives": ["libs/shared/directives/src/index.ts"],
-      "@realworld/shared/configuration": [
-        "libs/shared/configuration/src/index.ts"
-      ],
-      "@realworld/shared/constants": ["libs/shared/constants/src/index.ts"]
+      "@realworld/shared/constants": ["libs/shared/constants/src/index.ts"],
+      "@realworld/shared/common": ["libs/shared/common/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
