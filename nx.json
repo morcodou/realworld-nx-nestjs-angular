@@ -1,0 +1,29 @@
+{
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": { "dependencies": "*", "devDependencies": "*" },
+    "tsconfig.base.json": "*",
+    "tslint.json": "*",
+    ".eslintrc.json": "*",
+    "nx.json": "*"
+  },
+  "affected": { "defaultBase": "master" },
+  "npmScope": "realworld",
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
+    }
+  },
+  "projects": {
+    "conduit": { "tags": [] },
+    "conduit-e2e": { "tags": [], "implicitDependencies": ["conduit"] },
+    "api": { "tags": [] },
+    "shared-api-core": { "tags": ["scope:shared", "type:lib"] },
+    "shared-api-configuration": { "tags": ["scope:shared", "type:lib"] },
+    "shared-api-constants": { "tags": ["scope:shared", "type:lib"] },
+    "shared-api-error-handler": { "tags": ["scope:shared", "type:lib"] },
+    "shared-api-foundation": { "tags": ["scope:shared", "type:lib"] },
+    "shared-api-validation": { "tags": ["scope:shared", "type:lib"] }
+  }
+}
