@@ -590,6 +590,31 @@
           }
         }
       }
+    },
+    "shared-spinner": {
+      "projectType": "library",
+      "root": "libs/shared/spinner",
+      "sourceRoot": "libs/shared/spinner/src",
+      "prefix": "realworld",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/spinner/src/**/*.ts",
+              "libs/shared/spinner/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/spinner"],
+          "options": {
+            "jestConfig": "libs/shared/spinner/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

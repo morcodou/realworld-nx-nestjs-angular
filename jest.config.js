@@ -19,5 +19,6 @@ module.exports = {
     '<rootDir>/libs/shared/loading',
     '<rootDir>/libs/shared/logging',
     '<rootDir>/libs/shared/notification',
+    '<rootDir>/libs/shared/spinner',
   ],
 };

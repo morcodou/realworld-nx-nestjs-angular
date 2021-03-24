@@ -49,7 +49,8 @@
       "@realworld/shared/logging": ["libs/shared/logging/src/index.ts"],
       "@realworld/shared/notification": [
         "libs/shared/notification/src/index.ts"
-      ]
+      ],
+      "@realworld/shared/spinner": ["libs/shared/spinner/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
