@@ -22,5 +22,6 @@ module.exports = {
     '<rootDir>/libs/shared/spinner',
     '<rootDir>/libs/shared/storage',
     '<rootDir>/libs/shared/toaster',
+    '<rootDir>/libs/shared/core',
   ],
 };

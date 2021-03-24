@@ -38,6 +38,7 @@
     "shared-notification": { "tags": ["scope:shared", "type:lib"] },
     "shared-spinner": { "tags": ["scope:shared", "type:lib"] },
     "shared-storage": { "tags": ["scope:shared", "type:lib"] },
-    "shared-toaster": { "tags": ["scope:shared", "type:lib"] }
+    "shared-toaster": { "tags": ["scope:shared", "type:lib"] },
+    "shared-core": { "tags": ["scope:shared", "type:lib"] }
   }
 }
