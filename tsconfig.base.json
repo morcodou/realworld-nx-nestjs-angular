@@ -16,9 +16,6 @@
     "baseUrl": ".",
     "paths": {
       "@realworld/shared/api/core": ["libs/shared/api/core/src/index.ts"],
-      "@realworld/shared/api/configuration": [
-        "libs/shared/api/configuration/src/index.ts"
-      ],
       "@realworld/shared/api/constants": [
         "libs/shared/api/constants/src/index.ts"
       ],

@@ -20,7 +20,6 @@
     "conduit-e2e": { "tags": [], "implicitDependencies": ["conduit"] },
     "api": { "tags": [] },
     "shared-api-core": { "tags": ["scope:shared", "type:lib"] },
-    "shared-api-configuration": { "tags": ["scope:shared", "type:lib"] },
     "shared-api-constants": { "tags": ["scope:shared", "type:lib"] },
     "shared-api-error-handler": { "tags": ["scope:shared", "type:lib"] },
     "shared-api-foundation": { "tags": ["scope:shared", "type:lib"] },

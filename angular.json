@@ -219,27 +219,6 @@
         }
       }
     },
-    "shared-api-configuration": {
-      "root": "libs/shared/api/configuration",
-      "sourceRoot": "libs/shared/api/configuration/src",
-      "projectType": "library",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/shared/api/configuration/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/shared/api/configuration"],
-          "options": {
-            "jestConfig": "libs/shared/api/configuration/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "shared-api-constants": {
       "root": "libs/shared/api/constants",
       "sourceRoot": "libs/shared/api/constants/src",
