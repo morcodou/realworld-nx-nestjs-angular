@@ -25,6 +25,7 @@
     "shared-api-foundation": { "tags": ["scope:shared", "type:lib"] },
     "shared-api-config": { "tags": ["scope:shared", "type:lib"] },
     "shared-api-validations": { "tags": ["scope:shared", "type:lib"] },
-    "shared-client-server": { "tags": ["domain:shared", "type:lib"] }
+    "shared-client-server": { "tags": ["domain:shared", "type:lib"] },
+    "shared-common": { "tags": ["domain:shared", "type:lib"] }
   }
 }

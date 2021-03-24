@@ -31,7 +31,8 @@
       ],
       "@realworld/shared/client-server": [
         "libs/shared/client-server/src/index.ts"
-      ]
+      ],
+      "@realworld/shared/common": ["libs/shared/common/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
