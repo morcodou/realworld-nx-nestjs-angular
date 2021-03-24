@@ -365,6 +365,27 @@
           }
         }
       }
+    },
+    "shared-directives": {
+      "root": "libs/shared/directives",
+      "sourceRoot": "libs/shared/directives/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/shared/directives/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/directives"],
+          "options": {
+            "jestConfig": "libs/shared/directives/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }
