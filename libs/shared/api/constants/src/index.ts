@@ -1,1 +1,1 @@
-export * from './lib/shared-api-constants.module';
+export * from './lib/messages';
