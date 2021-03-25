@@ -51,9 +51,7 @@
               "apps/conduit/src/favicon.ico",
               "apps/conduit/src/assets"
             ],
-            "styles": [
-              "apps/conduit/src/styles.scss"
-            ],
+            "styles": ["apps/conduit/src/styles.scss"],
             "scripts": [],
             "allowedCommonJsDependencies": ["r7insight_js", "validator"]
           },
@@ -772,6 +770,56 @@
           "outputs": ["coverage/libs/user/api-interfaces"],
           "options": {
             "jestConfig": "libs/user/api-interfaces/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "user-feature": {
+      "projectType": "library",
+      "root": "libs/user/feature",
+      "sourceRoot": "libs/user/feature/src",
+      "prefix": "realworld",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/user/feature/src/**/*.ts",
+              "libs/user/feature/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/user/feature"],
+          "options": {
+            "jestConfig": "libs/user/feature/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "user-shared": {
+      "projectType": "library",
+      "root": "libs/user/shared",
+      "sourceRoot": "libs/user/shared/src",
+      "prefix": "realworld",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/user/shared/src/**/*.ts",
+              "libs/user/shared/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/user/shared"],
+          "options": {
+            "jestConfig": "libs/user/shared/jest.config.js",
             "passWithNoTests": true
           }
         }

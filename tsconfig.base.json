@@ -59,7 +59,9 @@
       "@realworld/user/api/handlers": ["libs/user/api/handlers/src/index.ts"],
       "@realworld/user/api-interfaces": [
         "libs/user/api-interfaces/src/index.ts"
-      ]
+      ],
+      "@realworld/user/feature": ["libs/user/feature/src/index.ts"],
+      "@realworld/user/shared": ["libs/user/shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

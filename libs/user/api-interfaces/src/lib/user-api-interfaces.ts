@@ -11,10 +11,10 @@ export abstract class ILoginUser {
 
 // Register
 export abstract class INewUser {
-    @MaxLength(255)
+    @MaxLength(60)
     username: string
     @IsEmail()
-    @MaxLength(255)
+    @MaxLength(60)
     email: string
     @IsNotEmpty()
     @MaxLength(200)
@@ -33,10 +33,10 @@ export abstract class IUser extends IBase {
 
 // Update user
 export abstract class IUpdateUser {
-    @MaxLength(255)
+    @MaxLength(60)
     username: string
     @IsEmail()
-    @MaxLength(255)
+    @MaxLength(60)
     email: string
     @IsNotEmpty()
     @MaxLength(255)

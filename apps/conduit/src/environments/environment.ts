@@ -7,7 +7,7 @@ export const environment: Partial<IConfiguration> = {
   production: false,
   debug: true,
   rest: {
-    url: 'http://localhost:3333'
+    url: 'http://localhost:3333/api'
   },
   logging: {
     sendToCentralizedServer: false,

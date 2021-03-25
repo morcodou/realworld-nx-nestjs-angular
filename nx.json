@@ -43,6 +43,8 @@
     "shared-string-util": { "tags": ["scope:shared", "type:lib"] },
     "user-api-shared": { "tags": ["scope:domain", "type:lib"] },
     "user-api-handlers": { "tags": ["scope:domain", "type:feature"] },
-    "user-api-interfaces": { "tags": ["scope:domain", "type:lib"] }
+    "user-api-interfaces": { "tags": ["scope:domain", "type:lib"] },
+    "user-feature": { "tags": ["scope:domain", "type:feature"] },
+    "user-shared": { "tags": ["scope:domain", "type:lib"] }
   }
 }

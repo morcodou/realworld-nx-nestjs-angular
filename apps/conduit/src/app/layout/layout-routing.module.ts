@@ -7,12 +7,11 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
-      // { 
-      //   path: '', 
-      //   loadChildren: () => import('../home/home.module')
-      //     .then(m => m.HomeModule),
-      //   pathMatch: 'full'
-      // },
+      { 
+        path: 'auth', 
+        loadChildren: () => import('@realworld/user/feature')
+          .then(m => m.UserFeatureModule)
+      },
     ]
   },
 ]
