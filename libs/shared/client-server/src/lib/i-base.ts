@@ -1,7 +1,6 @@
 export abstract class IBase {
     id?: string
-    createdDate?: Date
-    updatedDate?: Date
-    isDeleted?: boolean
-    isEnable?: boolean
+    createdAt?: Date
+    updatedAt?: Date 
+    deletedDate?: Date 
 }

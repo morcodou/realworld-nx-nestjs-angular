@@ -13,6 +13,4 @@ export abstract class User extends BaseEntity {
   bio: string;
   @Column()
   image: string;
-  @Column()
-  token: string;
 }

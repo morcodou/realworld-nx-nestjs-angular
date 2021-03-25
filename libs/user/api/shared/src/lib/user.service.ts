@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ApiConfigService } from '@realworld/shared/api/config';
 import { DUPLICATE_RESOURCE_MSG, INVALID_ACCOUNT_MSG, NOT_FOUND_MSG } from '@realworld/shared/api/constants';
 import { BaseService } from '@realworld/shared/api/foundation';
-import { ILogin, IRegister, IUser } from '@realworld/user/api-interfaces';
+import { IUpdateUser, IUser, ILoginUser, INewUser } from '@realworld/user/api-interfaces';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
@@ -22,7 +22,7 @@ export class UserService extends BaseService<User> {
         this.repository = repository
     }
 
-    async login(data: ILogin): Promise<IUser> {
+    async login(data: ILoginUser): Promise<IUser> {
         let user = await this.validateUser(data.email, data.password)
         return {
             ...user as IUser,
@@ -30,8 +30,8 @@ export class UserService extends BaseService<User> {
         }
     }
 
-    async register(data: IRegister) {
-        let existingUser = await this.findOne(null, {where: [
+    async register(data: INewUser) {
+        const existingUser = await this.findOne(null, {where: [
             {email: data.email.toLowerCase()}, 
             {username: data.username.toLowerCase()}
         ]})
@@ -42,12 +42,16 @@ export class UserService extends BaseService<User> {
 
         let user: Partial<User> = {...data}
         user.password = await UserHelper.hashPassword(user.password)
-        let result = await this.insert(user)
-        return result
+        await this.insert(user)
+        return {
+            ...user,
+            password: null,
+            token: await UserHelper.generateJWTToken(this.jwtService, {sub: user.username, email: user.email}),
+        }
     }
 
-    async updateUserInfo(username: string, data: IUser) {
-        let user = await this.findOne({isEnabled: true, username: username})
+    async updateUserInfo(username: string, data: IUpdateUser) {
+        const user = await this.findOne({username: username})
         if (!user) {
             throw new BadRequestException(INVALID_ACCOUNT_MSG)
         }
@@ -56,16 +60,19 @@ export class UserService extends BaseService<User> {
             data.password = await UserHelper.hashPassword(data.password)
         }
 
-        return await this.update(
-            {username: username}, 
-            data
-        )
+        await this.update({username: username}, data)
+        const newUserInfo = {...user, ...data}
+
+        return {
+            ...newUserInfo, 
+            password: null,
+            token: await UserHelper.generateJWTToken(this.jwtService, {sub: newUserInfo.username, email: newUserInfo.email}),
+        }
     }
 
     private async validateUser(emailLogin: string, passwordLogin: string): Promise<Partial<IUser>> {
         const user = await this.findOne({
-            email: emailLogin.toLowerCase().trim(), 
-            isEnabled: true
+            email: emailLogin.toLowerCase().trim()
         })
         if(!user) {
             throw new NotFoundException(NOT_FOUND_MSG)

@@ -1,4 +1,5 @@
 import { IsEmail, IsNotEmpty, IsUrl, MaxLength } from 'class-validator';
+import { IBase } from '@realworld/shared/client-server';
 // Login
 export abstract class ILoginUser {
     @IsEmail()
@@ -7,9 +8,6 @@ export abstract class ILoginUser {
     password: string
 } 
 
-export abstract class ILoginUserRequest {
-    user: ILoginUser
-} 
 
 // Register
 export abstract class INewUser {
@@ -23,12 +21,8 @@ export abstract class INewUser {
     password: string
 } 
 
-export abstract class INewUserRequest {
-    user: INewUser
-} 
-
 // User response
-export abstract class IUser {
+export abstract class IUser extends IBase {
     username: string
     email: string
     token: string
@@ -36,9 +30,6 @@ export abstract class IUser {
     image: string
 } 
 
-export abstract class IUserResponse {
-    user: IUser
-} 
 
 // Update user
 export abstract class IUpdateUser {
@@ -56,18 +47,10 @@ export abstract class IUpdateUser {
     image: string
 } 
 
-export abstract class IUpdateUserRequest {
-    user: IUpdateUser
-} 
-
 // Profile
-export abstract class IProfile {
+export abstract class IProfile extends IBase {
     username: string
     bio: string
     image: string
     following: boolean
-} 
-
-export abstract class IProfileResponse {
-    profile: IProfile
 } 

@@ -15,19 +15,15 @@ export class InitUser1603352814806 implements MigrationInterface {
             columns: [
                 ...DEFAULT_COLUMNS,
                 {
-                    name: 'firstName',
-                    type: 'varchar',
-                    length: '50'
-                },
-                {
-                    name: 'lastName',
-                    type: 'varchar',
-                    length: '50'
-                },
-                {
                     name: 'email',
                     type: 'varchar',
-                    length: '50',
+                    length: '255',
+                    isUnique: true
+                },
+                {
+                    name: 'username',
+                    type: 'varchar',
+                    length: '255',
                     isUnique: true
                 },
                 {
@@ -36,34 +32,17 @@ export class InitUser1603352814806 implements MigrationInterface {
                     length: '255'
                 },
                 {
-                    name: 'emailConfirmToken',
-                    type: 'varchar',
-                    length: '255',
+                    name: 'bio',
+                    type: 'text',
                     isNullable: true
                 },
                 {
-                    name: 'emailActive',
-                    type: 'boolean',
-                    default: 0
-                },
-                {
-                    name: 'passwordRemiderToken',
-                    type: 'varchar',
-                    length: '255',
+                    name: 'image',
+                    type: 'text',
                     isNullable: true
                 },
-                {
-                    name: 'passwordRemiderExpiry',
-                    type: 'timestamp',
-                    isNullable: true
-                },
-                {
-                    name: 'role',
-                    type: 'varchar',
-                    length: '20'
-                }
             ],
-            indices: [{name: 'id-email-index', columnNames: ['id', 'email']}],
+            indices: [{name: 'id-email-username-index', columnNames: ['id', 'email', 'username']}],
             engine: DB_ENGINE.MYISAM
         }))
     }

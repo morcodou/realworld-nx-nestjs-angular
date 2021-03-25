@@ -15,13 +15,13 @@ export const ID_COLUMN: TableColumnOptions = {
     generationStrategy: 'uuid',
     isUnique: true
 }
-export const CREATED_DATE_COLUMN: TableColumnOptions = {
-    name: 'createdDate',
+export const CREATED_AT_COLUMN: TableColumnOptions = {
+    name: 'createdAt',
     type: 'timestamp',
     default: 'current_timestamp'
 }
-export const UPDATED_DATE_COLUMN: TableColumnOptions = {
-    name: 'updatedDate',
+export const UPDATED_AT_COLUMN: TableColumnOptions = {
+    name: 'updatedAt',
     type: 'timestamp',
     isNullable: true
 }
@@ -30,16 +30,10 @@ export const DELETED_DATE_COLUMN: TableColumnOptions = {
     type: 'timestamp',
     isNullable: true
 }
-export const IS_ENABLED_COLUMN: TableColumnOptions = {
-    name: 'isEnabled',
-    type: 'boolean',
-    default: 1
-}
 
 export const DEFAULT_COLUMNS = [
     ID_COLUMN,
-    CREATED_DATE_COLUMN,
-    UPDATED_DATE_COLUMN,
-    DELETED_DATE_COLUMN,
-    IS_ENABLED_COLUMN,
+    CREATED_AT_COLUMN,
+    UPDATED_AT_COLUMN,
+    DELETED_DATE_COLUMN
 ]

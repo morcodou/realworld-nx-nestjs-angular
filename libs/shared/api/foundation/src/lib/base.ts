@@ -4,11 +4,9 @@ export abstract class BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id?: string;
   @CreateDateColumn()
-  createdDate?: Date;
+  createdAt?: Date;
   @UpdateDateColumn()
-  updatedDate?: Date;
+  updatedAt?: Date;
   @DeleteDateColumn()
   deletedDate?: Date;
-  @Column({ default: true })
-  isEnabled?: boolean;
 }
