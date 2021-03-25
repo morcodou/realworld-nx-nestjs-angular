@@ -40,6 +40,9 @@
     "shared-storage": { "tags": ["scope:shared", "type:lib"] },
     "shared-toaster": { "tags": ["scope:shared", "type:lib"] },
     "shared-core": { "tags": ["scope:shared", "type:lib"] },
-    "shared-string-util": { "tags": ["scope:shared", "type:lib"] }
+    "shared-string-util": { "tags": ["scope:shared", "type:lib"] },
+    "user-api-shared": { "tags": ["scope:domain", "type:lib"] },
+    "user-api-handlers": { "tags": ["scope:domain", "type:feature"] },
+    "user-api-interfaces": { "tags": ["scope:domain", "type:lib"] }
   }
 }

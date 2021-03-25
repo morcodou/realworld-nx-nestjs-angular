@@ -54,7 +54,12 @@
       "@realworld/shared/storage": ["libs/shared/storage/src/index.ts"],
       "@realworld/shared/toaster": ["libs/shared/toaster/src/index.ts"],
       "@realworld/shared/core": ["libs/shared/core/src/index.ts"],
-      "@realworld/shared/string-util": ["libs/shared/string-util/src/index.ts"]
+      "@realworld/shared/string-util": ["libs/shared/string-util/src/index.ts"],
+      "@realworld/user/api/shared": ["libs/user/api/shared/src/index.ts"],
+      "@realworld/user/api/handlers": ["libs/user/api/handlers/src/index.ts"],
+      "@realworld/user/api-interfaces": [
+        "libs/user/api-interfaces/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -24,5 +24,8 @@ module.exports = {
     '<rootDir>/libs/shared/toaster',
     '<rootDir>/libs/shared/core',
     '<rootDir>/libs/shared/string-util',
+    '<rootDir>/libs/user/api/shared',
+    '<rootDir>/libs/user/api/handlers',
+    '<rootDir>/libs/user/api-interfaces',
   ],
 };

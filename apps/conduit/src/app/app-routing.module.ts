@@ -11,7 +11,7 @@ export const routes: Routes = [
 ];
 
 const config: ExtraOptions = {
-  useHash: false,
+  useHash: true,
   scrollPositionRestoration: 'enabled',
   initialNavigation: 'enabled'
 };

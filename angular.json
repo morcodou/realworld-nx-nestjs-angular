@@ -51,7 +51,9 @@
               "apps/conduit/src/favicon.ico",
               "apps/conduit/src/assets"
             ],
-            "styles": ["apps/conduit/src/styles.scss"],
+            "styles": [
+              "apps/conduit/src/styles.scss"
+            ],
             "scripts": [],
             "allowedCommonJsDependencies": ["r7insight_js", "validator"]
           },
@@ -707,6 +709,69 @@
           "outputs": ["coverage/libs/shared/string-util"],
           "options": {
             "jestConfig": "libs/shared/string-util/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "user-api-shared": {
+      "root": "libs/user/api/shared",
+      "sourceRoot": "libs/user/api/shared/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/user/api/shared/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/user/api/shared"],
+          "options": {
+            "jestConfig": "libs/user/api/shared/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "user-api-handlers": {
+      "root": "libs/user/api/handlers",
+      "sourceRoot": "libs/user/api/handlers/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/user/api/handlers/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/user/api/handlers"],
+          "options": {
+            "jestConfig": "libs/user/api/handlers/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "user-api-interfaces": {
+      "root": "libs/user/api-interfaces",
+      "sourceRoot": "libs/user/api-interfaces/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/user/api-interfaces/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/user/api-interfaces"],
+          "options": {
+            "jestConfig": "libs/user/api-interfaces/jest.config.js",
             "passWithNoTests": true
           }
         }
