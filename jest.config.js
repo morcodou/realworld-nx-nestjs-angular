@@ -23,5 +23,6 @@ module.exports = {
     '<rootDir>/libs/shared/storage',
     '<rootDir>/libs/shared/toaster',
     '<rootDir>/libs/shared/core',
+    '<rootDir>/libs/shared/string-util',
   ],
 };

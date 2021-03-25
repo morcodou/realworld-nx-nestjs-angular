@@ -690,6 +690,27 @@
           }
         }
       }
+    },
+    "shared-string-util": {
+      "root": "libs/shared/string-util",
+      "sourceRoot": "libs/shared/string-util/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/shared/string-util/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/string-util"],
+          "options": {
+            "jestConfig": "libs/shared/string-util/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

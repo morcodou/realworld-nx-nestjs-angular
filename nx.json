@@ -39,6 +39,7 @@
     "shared-spinner": { "tags": ["scope:shared", "type:lib"] },
     "shared-storage": { "tags": ["scope:shared", "type:lib"] },
     "shared-toaster": { "tags": ["scope:shared", "type:lib"] },
-    "shared-core": { "tags": ["scope:shared", "type:lib"] }
+    "shared-core": { "tags": ["scope:shared", "type:lib"] },
+    "shared-string-util": { "tags": ["scope:shared", "type:lib"] }
   }
 }

@@ -53,7 +53,8 @@
       "@realworld/shared/spinner": ["libs/shared/spinner/src/index.ts"],
       "@realworld/shared/storage": ["libs/shared/storage/src/index.ts"],
       "@realworld/shared/toaster": ["libs/shared/toaster/src/index.ts"],
-      "@realworld/shared/core": ["libs/shared/core/src/index.ts"]
+      "@realworld/shared/core": ["libs/shared/core/src/index.ts"],
+      "@realworld/shared/string-util": ["libs/shared/string-util/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
