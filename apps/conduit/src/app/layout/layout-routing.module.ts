@@ -8,9 +8,14 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       { 
-        path: 'auth', 
+        path: 'login', 
         loadChildren: () => import('@realworld/user/feature')
-          .then(m => m.UserFeatureModule)
+          .then(m => m.LoginModule)
+      },
+      { 
+        path: 'register', 
+        loadChildren: () => import('@realworld/user/feature')
+          .then(m => m.RegisterModule)
       },
     ]
   },

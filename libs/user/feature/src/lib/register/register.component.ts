@@ -12,7 +12,6 @@ import { CustomValidators } from 'ngx-custom-validators';
 })
 export class RegisterComponent {
   form: FormGroup
-  reCaptchaValidated = false
 
   get control() {
     return {
