@@ -5,21 +5,27 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/">Home</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/">
-          <i class="ion-compose"></i>&nbsp;New Post
+      <li class="nav-item" *ngIf="isAuth">
+        <a class="nav-link" routerLink="/editor">
+          <i class="ion-compose"></i>&nbsp;New Article
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/">
+        <a class="nav-link" routerLink="/settings" *ngIf="isAuth">
           <i class="ion-gear-a"></i>&nbsp;Settings
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/login">Sign in</a>
+        <a class="nav-link" routerLink="/login" *ngIf="!isAuth">Sign in</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/register">Sign up</a>
+        <a class="nav-link" routerLink="/register" *ngIf="!isAuth">Sign up</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="'/@'+user?.username" *ngIf="isAuth">
+          <img *ngIf="user?.image" [src]="user?.image" class="user-pic">
+          {{user?.username}}
+        </a>
       </li>
     </ul>
   </div>

@@ -17,6 +17,11 @@ const routes: Routes = [
         loadChildren: () => import('@realworld/user/feature')
           .then(m => m.RegisterModule)
       },
+      { 
+        path: 'settings', 
+        loadChildren: () => import('@realworld/user/feature')
+          .then(m => m.SettingModule)
+      },
     ]
   },
 ]

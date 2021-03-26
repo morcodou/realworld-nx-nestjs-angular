@@ -1,4 +1,4 @@
-<realworld-navbar></realworld-navbar>
+<realworld-navbar [isAuth]="userService?.isAuth" [user]="userService?.userInfo"></realworld-navbar>
 
 <div>
     <router-outlet></router-outlet>

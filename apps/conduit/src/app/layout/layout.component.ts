@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IUserService } from '@realworld/user/shared';
 
 @Component({
   selector: 'realworld-layout',
@@ -6,4 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./layout.component.scss'] 
 })
 export class LayoutComponent {
+  constructor(public userService: IUserService) {
+    
+  }
 }

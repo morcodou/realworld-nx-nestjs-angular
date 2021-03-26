@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { IUser } from '@realworld/user/api-interfaces';
 
 @UntilDestroy()
 @Component({
@@ -9,4 +10,6 @@ import { UntilDestroy } from '@ngneat/until-destroy';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavbarComponent {
+  @Input() isAuth: boolean
+  @Input() user: IUser
 }
