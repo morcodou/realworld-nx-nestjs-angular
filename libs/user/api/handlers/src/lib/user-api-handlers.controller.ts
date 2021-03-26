@@ -1,6 +1,6 @@
-import { Body, Controller, NotAcceptableException, Post, Put, Req } from '@nestjs/common';
+import { Body, Controller, Get, NotAcceptableException, Post, Put, Req } from '@nestjs/common';
 import { LOGGED_IN_MSG, REGISTERED_MSG, UPDATED_MSG } from '@realworld/shared/api/constants';
-import { ActionSuccessResponse, IResponse } from '@realworld/shared/client-server';
+import { ActionSuccessResponse, DetailSuccessResponse, IResponse } from '@realworld/shared/client-server';
 import { IUpdateUser, IUser, ILoginUser, INewUser } from '@realworld/user/api-interfaces';
 import { SkipAuth, UserService } from '@realworld/user/api/shared';
 
@@ -12,7 +12,7 @@ export class UserApiHandlersController {
     @Post('users/login')
     async login(@Body() data: ILoginUser): Promise<IResponse<IUser>> {
         const user = await this.userService.login(data)
-        return new ActionSuccessResponse<IUser>({
+        return new ActionSuccessResponse<Partial<IUser>>({
             id: user.username,
             message: LOGGED_IN_MSG,
             data: user
@@ -23,7 +23,7 @@ export class UserApiHandlersController {
     @Post('users')
     async register(@Body() data: INewUser): Promise<IResponse<IUser>> {
         const user = await this.userService.register(data)
-        return new ActionSuccessResponse<IUser>({
+        return new ActionSuccessResponse<Partial<IUser>>({
             id: user.username,
             message: REGISTERED_MSG,
             data: user
@@ -31,16 +31,21 @@ export class UserApiHandlersController {
     }
 
     @Put('users')
-    async update(@Req() req, @Body() data: IUpdateUser) {
-        if (req?.user?.sub !== data?.username) {
-            throw new NotAcceptableException()
-        }
-
+    async update(@Req() req, @Body() data: Partial<IUpdateUser>) {
         const user = await this.userService.updateUserInfo(req?.user?.sub, data)
-        return new ActionSuccessResponse({
+        return new ActionSuccessResponse<Partial<IUser>>({
             id: data.username,
             message: UPDATED_MSG,
             data: user
+        })
+    }
+
+    @Get('user')
+    async getCurrentUser(@Req() req) {
+        const {password, ...user} = (await this.userService.findOne({username: req?.user?.sub})) || {}
+
+        return new DetailSuccessResponse<Partial<IUser>>({
+            detailData: user
         })
     }
 }

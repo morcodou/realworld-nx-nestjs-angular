@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ActionSuccessResponse } from "@realworld/shared/client-server";
+import { ActionSuccessResponse, DetailSuccessResponse } from "@realworld/shared/client-server";
 import { IBaseDataService } from "@realworld/shared/foundation";
 import { ILoginUser, INewUser, IUser } from "@realworld/user/api-interfaces";
 import { Observable } from "rxjs";
@@ -17,4 +17,5 @@ export abstract class IUserService extends IBaseDataService<IUser> {
     abstract login(body: ILoginUser): Observable<ActionSuccessResponse<IUser>>
     abstract logout()
     abstract register(data: INewUser): Observable<ActionSuccessResponse<IUser>>
+    abstract getCurrentUser(): Observable<DetailSuccessResponse<Partial<IUser>>>
 }

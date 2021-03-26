@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { ActionSuccessResponse } from "@realworld/shared/client-server";
+import { ActionSuccessResponse, DetailSuccessResponse } from "@realworld/shared/client-server";
 import { IConfigurationService } from "@realworld/shared/configuration";
 import { BaseDataService } from "@realworld/shared/foundation";
 import { UserStorageUtil } from "@realworld/shared/storage";
@@ -54,6 +54,11 @@ export class UserService extends BaseDataService<IUser> implements IUserService 
                 this.updateAuthState(res.data as IUser)
                 this.userStorageUtil.setUserData(res)
             }))
+    }
+
+    getCurrentUser(): Observable<DetailSuccessResponse<Partial<IUser>>> {
+        let url = this.getURLFromEndpoint({ endpoint: 'user' })
+        return this.http.get<DetailSuccessResponse<Partial<IUser>>>(url, this.defaultOptions)
     }
 
 }

@@ -1,8 +1,12 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApiConfigService } from '@realworld/shared/api/config';
+import { JwtAuthGuard } from './jwt-strategy/jwt-auth.guard';
+import { JwtStrategy } from './jwt-strategy/jwt.strategy';
+import { RolesGuard } from './roles.guard';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 
@@ -22,7 +26,18 @@ import { UserService } from './user.service';
       inject: [ApiConfigService]
     })
   ],
-  providers: [UserService],
-  exports: [UserService]
+  providers: [
+    UserService,
+    JwtStrategy,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
+  exports: [UserService, JwtStrategy]
 })
 export class UserApiSharedModule {}

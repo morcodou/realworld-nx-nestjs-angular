@@ -8,7 +8,6 @@ import { IUpdateUser, IUser, ILoginUser, INewUser } from '@realworld/user/api-in
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { UserHelper } from './user.helper';
 
 @Injectable()
 export class UserService extends BaseService<User> {
@@ -26,7 +25,7 @@ export class UserService extends BaseService<User> {
         let user = await this.validateUser(data.email, data.password)
         return {
             ...user as IUser,
-            token: await UserHelper.generateJWTToken(this.jwtService, {sub: user.username, email: user.email}),
+            token: await this.generateJWTToken({sub: user.username, email: user.email}),
         }
     }
 
@@ -41,23 +40,25 @@ export class UserService extends BaseService<User> {
         }
 
         let user: Partial<User> = {...data}
-        user.password = await UserHelper.hashPassword(user.password)
+        user.password = await this.hashPassword(user.password)
         await this.insert(user)
         return {
             ...user,
             password: null,
-            token: await UserHelper.generateJWTToken(this.jwtService, {sub: user.username, email: user.email}),
+            token: await this.generateJWTToken({sub: user.username, email: user.email}),
         }
     }
 
-    async updateUserInfo(username: string, data: IUpdateUser) {
+    async updateUserInfo(username: string, data: Partial<IUpdateUser>) {
         const user = await this.findOne({username: username})
         if (!user) {
             throw new BadRequestException(INVALID_ACCOUNT_MSG)
         }
         
         if (data.password) {
-            data.password = await UserHelper.hashPassword(data.password)
+            data.password = await this.hashPassword(data.password)
+        } else {
+            delete data.password
         }
 
         await this.update({username: username}, data)
@@ -66,7 +67,7 @@ export class UserService extends BaseService<User> {
         return {
             ...newUserInfo, 
             password: null,
-            token: await UserHelper.generateJWTToken(this.jwtService, {sub: newUserInfo.username, email: newUserInfo.email}),
+            token: await this.generateJWTToken({sub: newUserInfo.username, email: newUserInfo.email}),
         }
     }
 
@@ -87,5 +88,34 @@ export class UserService extends BaseService<User> {
         }
 
         return { email, username, bio, image }
+    }
+
+    async hashPassword(raw: string): Promise<string> {
+        return await bcrypt.hash(raw, 10)
+    }
+
+    async generateConfirmToken(email: string): Promise<string> {
+        let res = await bcrypt.hash(email + new Date().getTime(), 10);
+        return this.toBase64(res)
+    }
+
+    toBase64(token: string): string {
+        return Buffer.from(token).toString('base64')
+    }
+
+    fromBase64(token: string): string {
+        return Buffer.from(token, 'base64').toString('ascii')
+    }
+
+    async generateJWTToken(data: {
+        sub: string
+        email: string
+    }): Promise<string> {
+        const jwtPayload = { 
+            email: data.email, 
+            sub: data.sub
+        }
+
+        return this.jwtService.sign(jwtPayload)
     }
 }

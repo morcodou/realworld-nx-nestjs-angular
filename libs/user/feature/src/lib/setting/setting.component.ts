@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IUserService } from '@realworld/user/shared';
 import { CustomValidators } from 'ngx-custom-validators';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'realworld-setting',
@@ -20,7 +21,9 @@ export class SettingComponent implements OnInit {
     this.initForm()
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    const user = (await this.userService.getCurrentUser().pipe(take(1)).toPromise())?.detailData
+    this.form.patchValue(user)
   }
 
   logout() {
