@@ -1,12 +1,11 @@
 import { Module } from '@nestjs/common';
-import { ArticleApiHandlersController } from './article-api-handlers.controller';
-import { CommentApiHandlersController } from './comment-api-handlers.controller';
-import { FavoriteApiHandlersController } from './favorite-api-handlers.controller';
 import { ArticleApiSharedModule } from '@realworld/article/api/shared';
+import { UserApiSharedModule } from '@realworld/user/api/shared';
+import { ArticleApiHandlersController } from './article-api-handlers.controller';
 
 @Module({
-  controllers: [ArticleApiHandlersController, CommentApiHandlersController, FavoriteApiHandlersController],
+  controllers: [ArticleApiHandlersController],
   providers: [],
-  imports: [ArticleApiSharedModule],
+  imports: [ArticleApiSharedModule, UserApiSharedModule],
 })
 export class ArticleApiHandlersModule {}

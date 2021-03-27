@@ -3,7 +3,6 @@ import { HTTP_STATUS_CODE } from "./http/http-status-codes"
 export interface IResponse<T> {
     success: boolean
     statusCode: number
-    id?: string, 
     message?: string
     detailData?: Partial<T>
     listData?: Partial<T>[]
@@ -14,16 +13,13 @@ export interface IResponse<T> {
 export class ActionSuccessResponse<T> implements IResponse<T> {
     success = true
     statusCode = HTTP_STATUS_CODE.OK
-    id: string
     message: string
-    data?: Partial<T> // for login action
+    data: Partial<T>
 
     constructor(options: {
-        id: string
         message: string,
-        data?: Partial<T>
+        data: Partial<T>
     }) {
-        this.id = options.id
         this.message = options.message
         this.data = options.data
     }

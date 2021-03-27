@@ -7,6 +7,7 @@ import { Favorite } from './favorite.entity';
 import { FavoriteService } from './favorite.service';
 import { Tag } from './tag.entity';
 import { TagService } from './tag.service';
+import { Comment } from './comment.entity';
 
 @Module({
   imports: [

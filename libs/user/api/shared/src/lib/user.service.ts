@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ApiConfigService } from '@realworld/shared/api/config';
 import { DUPLICATE_RESOURCE_MSG, INVALID_ACCOUNT_MSG, NOT_FOUND_MSG } from '@realworld/shared/api/constants';
 import { BaseService } from '@realworld/shared/api/foundation';
-import { IUpdateUser, IUser, ILoginUser, INewUser } from '@realworld/user/api-interfaces';
+import { ILoginUser, INewUser, IProfile, IUpdateUser, IUser } from '@realworld/user/api-interfaces';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
+import { FollowService } from './follow.service';
 import { User } from './user.entity';
 
 @Injectable()
@@ -14,8 +14,8 @@ export class UserService extends BaseService<User> {
     constructor(
         @InjectRepository(User)
         repository: Repository<User>,
-        private configService: ApiConfigService,
         private jwtService: JwtService,
+        private followService: FollowService
     ) {
         super()
         this.repository = repository
@@ -71,6 +71,23 @@ export class UserService extends BaseService<User> {
         }
     }
 
+    async getProfile(requestUsername: string, profileUsername: string): Promise<IProfile> {
+        const user = await this.findOne({username: profileUsername})
+        if(!user) {
+            throw new NotFoundException(NOT_FOUND_MSG)
+        }
+
+        return {
+            username: user.username,
+            bio: user.bio,
+            image: user.image,
+            following: !!(await this.followService.findOne({
+                followingUsername: requestUsername, 
+                followedUsername: profileUsername
+            }))
+        }   
+    }
+
     private async validateUser(emailLogin: string, passwordLogin: string): Promise<Partial<IUser>> {
         const user = await this.findOne({
             email: emailLogin.toLowerCase().trim()
@@ -90,24 +107,11 @@ export class UserService extends BaseService<User> {
         return { email, username, bio, image }
     }
 
-    async hashPassword(raw: string): Promise<string> {
+    private async hashPassword(raw: string): Promise<string> {
         return await bcrypt.hash(raw, 10)
     }
 
-    async generateConfirmToken(email: string): Promise<string> {
-        let res = await bcrypt.hash(email + new Date().getTime(), 10);
-        return this.toBase64(res)
-    }
-
-    toBase64(token: string): string {
-        return Buffer.from(token).toString('base64')
-    }
-
-    fromBase64(token: string): string {
-        return Buffer.from(token, 'base64').toString('ascii')
-    }
-
-    async generateJWTToken(data: {
+    private async generateJWTToken(data: {
         sub: string
         email: string
     }): Promise<string> {

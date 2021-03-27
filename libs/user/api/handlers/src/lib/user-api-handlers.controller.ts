@@ -13,7 +13,6 @@ export class UserApiHandlersController {
     async login(@Body() data: ILoginUser): Promise<IResponse<IUser>> {
         const user = await this.userService.login(data)
         return new ActionSuccessResponse<Partial<IUser>>({
-            id: user.username,
             message: LOGGED_IN_MSG,
             data: user
         })
@@ -24,7 +23,6 @@ export class UserApiHandlersController {
     async register(@Body() data: INewUser): Promise<IResponse<IUser>> {
         const user = await this.userService.register(data)
         return new ActionSuccessResponse<Partial<IUser>>({
-            id: user.username,
             message: REGISTERED_MSG,
             data: user
         })
@@ -34,7 +32,6 @@ export class UserApiHandlersController {
     async update(@Req() req, @Body() data: Partial<IUpdateUser>) {
         const user = await this.userService.updateUserInfo(req?.user?.sub, data)
         return new ActionSuccessResponse<Partial<IUser>>({
-            id: data.username,
             message: UPDATED_MSG,
             data: user
         })
