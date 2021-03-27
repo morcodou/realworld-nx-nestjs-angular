@@ -56,6 +56,17 @@ export class UserService extends BaseDataService<IUser> implements IUserService 
             }))
     }
 
+    update(body: Partial<IUser> & {id: string}, loading = true): Observable<ActionSuccessResponse<IUser>> {
+        let url = this.getURL()
+        this.setLoading(loading ? 'show' : 'not-show')
+        let options = {...this.defaultOptions}
+        return this.http.put<ActionSuccessResponse<IUser>>(url, body, options)
+            .pipe(tap(res => {
+                this.updateAuthState(res.data as IUser)
+                this.userStorageUtil.setUserData(res)
+            }))
+    }
+
     getCurrentUser(): Observable<DetailSuccessResponse<Partial<IUser>>> {
         let url = this.getURLFromEndpoint({ endpoint: 'user' })
         return this.http.get<DetailSuccessResponse<Partial<IUser>>>(url, this.defaultOptions)
