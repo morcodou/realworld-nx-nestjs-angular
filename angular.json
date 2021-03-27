@@ -824,6 +824,119 @@
           }
         }
       }
+    },
+    "article-api-shared": {
+      "root": "libs/article/api/shared",
+      "sourceRoot": "libs/article/api/shared/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/article/api/shared/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/article/api/shared"],
+          "options": {
+            "jestConfig": "libs/article/api/shared/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "article-api-handlers": {
+      "root": "libs/article/api/handlers",
+      "sourceRoot": "libs/article/api/handlers/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/article/api/handlers/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/article/api/handlers"],
+          "options": {
+            "jestConfig": "libs/article/api/handlers/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "article-api-interfaces": {
+      "root": "libs/article/api-interfaces",
+      "sourceRoot": "libs/article/api-interfaces/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/article/api-interfaces/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/article/api-interfaces"],
+          "options": {
+            "jestConfig": "libs/article/api-interfaces/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "article-shared": {
+      "projectType": "library",
+      "root": "libs/article/shared",
+      "sourceRoot": "libs/article/shared/src",
+      "prefix": "realworld",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/article/shared/src/**/*.ts",
+              "libs/article/shared/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/article/shared"],
+          "options": {
+            "jestConfig": "libs/article/shared/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "article-feature": {
+      "projectType": "library",
+      "root": "libs/article/feature",
+      "sourceRoot": "libs/article/feature/src",
+      "prefix": "realworld",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/article/feature/src/**/*.ts",
+              "libs/article/feature/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/article/feature"],
+          "options": {
+            "jestConfig": "libs/article/feature/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

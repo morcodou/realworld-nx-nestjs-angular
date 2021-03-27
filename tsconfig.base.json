@@ -61,7 +61,16 @@
         "libs/user/api-interfaces/src/index.ts"
       ],
       "@realworld/user/feature": ["libs/user/feature/src/index.ts"],
-      "@realworld/user/shared": ["libs/user/shared/src/index.ts"]
+      "@realworld/user/shared": ["libs/user/shared/src/index.ts"],
+      "@realworld/article/api/shared": ["libs/article/api/shared/src/index.ts"],
+      "@realworld/article/api/handlers": [
+        "libs/article/api/handlers/src/index.ts"
+      ],
+      "@realworld/article/api-interfaces": [
+        "libs/article/api-interfaces/src/index.ts"
+      ],
+      "@realworld/article/shared": ["libs/article/shared/src/index.ts"],
+      "@realworld/article/feature": ["libs/article/feature/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

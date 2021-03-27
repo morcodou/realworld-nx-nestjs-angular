@@ -45,6 +45,11 @@
     "user-api-handlers": { "tags": ["scope:domain", "type:feature"] },
     "user-api-interfaces": { "tags": ["scope:domain", "type:lib"] },
     "user-feature": { "tags": ["scope:domain", "type:feature"] },
-    "user-shared": { "tags": ["scope:domain", "type:lib"] }
+    "user-shared": { "tags": ["scope:domain", "type:lib"] },
+    "article-api-shared": { "tags": ["scope:domain", "type:lib"] },
+    "article-api-handlers": { "tags": ["scope:domain", "type:feature"] },
+    "article-api-interfaces": { "tags": ["scope:domain", "type:lib"] },
+    "article-shared": { "tags": ["scope:domain", "type:lib"] },
+    "article-feature": { "tags": ["scope:domain", "type:feature"] }
   }
 }

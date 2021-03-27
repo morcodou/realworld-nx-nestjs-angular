@@ -29,5 +29,10 @@ module.exports = {
     '<rootDir>/libs/user/api-interfaces',
     '<rootDir>/libs/user/feature',
     '<rootDir>/libs/user/shared',
+    '<rootDir>/libs/article/api/shared',
+    '<rootDir>/libs/article/api/handlers',
+    '<rootDir>/libs/article/api-interfaces',
+    '<rootDir>/libs/article/shared',
+    '<rootDir>/libs/article/feature',
   ],
 };
