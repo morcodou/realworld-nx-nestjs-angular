@@ -1,48 +1,50 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { DB_ENGINE, DEFAULT_COLUMNS } from "./migration.helper";
 
-export class InitUser1603352814806 implements MigrationInterface {
+export class InitArticle1616818598875 implements MigrationInterface {
+
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await this.initUserTable(queryRunner)
+        await this.initArticleTable(queryRunner)
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
     }
 
-    private async initUserTable(queryRunner: QueryRunner) {
+    private async initArticleTable(queryRunner: QueryRunner) {
         await queryRunner.createTable(new Table({
-            name: 'user',
+            name: 'article',
             columns: [
                 ...DEFAULT_COLUMNS,
                 {
-                    name: 'email',
+                    name: 'slug',
                     type: 'varchar',
+                    length: '250',
                     isUnique: true,
-                    length: '60'
                 },
                 {
-                    name: 'username',
+                    name: 'title',
                     type: 'varchar',
-                    isUnique: true,
-                    length: '60'
+                    length: '200'
                 },
                 {
-                    name: 'password',
+                    name: 'description',
+                    type: 'text',
+                },
+                {
+                    name: 'body',
+                    type: 'text',
+                },
+                {
+                    name: 'authorUsername',
                     type: 'varchar',
-                    length: '255'
+                    length: '255',
                 },
                 {
-                    name: 'bio',
-                    type: 'text',
-                    isNullable: true
-                },
-                {
-                    name: 'image',
-                    type: 'text',
-                    isNullable: true
+                    name: 'tagList',
+                    type: 'json',
                 },
             ],
-            indices: [{name: 'username-email-index', columnNames: ['username', 'email']}],
+            indices: [{name: 'id-index', columnNames: ['id']}],
             engine: DB_ENGINE.MYISAM
         }))
     }

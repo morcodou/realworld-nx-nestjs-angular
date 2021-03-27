@@ -3,7 +3,7 @@ import { BaseEntity } from '@realworld/shared/api/foundation';
 
 @Entity()
 export abstract class Article extends BaseEntity {
-  @Column()
+  @Column({unique: true})
   slug: string;
   @Column()
   title: string;
@@ -12,7 +12,7 @@ export abstract class Article extends BaseEntity {
   @Column()
   body: string;
   @Column()
-  authorId: string;
+  authorUsername: string;
   @Column("json", {array: true})
   tagList: string[];
 }

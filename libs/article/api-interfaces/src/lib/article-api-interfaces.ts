@@ -13,7 +13,7 @@ export abstract class IArticle extends IBase {
 } 
 
 export abstract class INewArticle {
-  @Length(1, 255)
+  @Length(1, 200)
   title: string
   @Length(1, 255)
   description: string
@@ -23,7 +23,7 @@ export abstract class INewArticle {
 } 
 
 export abstract class IUpdateArticle {
-  @Length(1, 255)
+  @Length(1, 200)
   title: string
   @Length(1, 255)
   description: string

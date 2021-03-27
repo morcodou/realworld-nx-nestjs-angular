@@ -4,7 +4,7 @@ import { BaseEntity } from '@realworld/shared/api/foundation';
 @Entity()
 export abstract class Favorite extends BaseEntity {
   @Column()
-  articleId: string;
+  username: string;
   @Column()
-  userId: string;
+  articleSlug: string;
 }
