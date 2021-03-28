@@ -5,28 +5,29 @@ import { CREATED_MSG, DELETED_MSG, MISSING_REQUIRED_FIELDS_MSG, NOT_FOUND_MSG, U
 import { mapQueriesToFindManyOptions } from '@realworld/shared/api/foundation';
 import { ActionSuccessResponse, DetailSuccessResponse, ListSuccessResponse } from '@realworld/shared/client-server';
 import { StringUtil } from '@realworld/shared/string-util';
-import { SkipAuth, UserService } from '@realworld/user/api/shared';
+import { Follow, FollowService, SkipAuth, UserService } from '@realworld/user/api/shared';
 
 @Controller()
 export class ArticleApiHandlersController {
     constructor(
         private articleService: ArticleService,
         private userService: UserService,
-        private favoriteService: FavoriteService
+        private favoriteService: FavoriteService,
+        private followService: FollowService
     ) { }
 
     @Post('articles')
     async create(@Req() req, @Body() data: Partial<INewArticle>) {
         let article: Partial<Article> = {
             ...data,
-            authorUsername: req?.user?.sub,
+            authorId: req?.user?.sub,
             slug: StringUtil.asciiSlug(data.title) + '-' + new Date().getTime()
         }
 
         await this.articleService.insert(article)
         return new ActionSuccessResponse<IArticle>({
             message: CREATED_MSG,
-            data: await this.mapToResponse(article?.authorUsername, article as Article)
+            data: await this.mapToResponse(article?.authorId, article as Article)
         })
     }
 
@@ -82,9 +83,21 @@ export class ArticleApiHandlersController {
             total: await this.articleService.count(options)
         })
     }
+    
+    @Get('articles/feed')
+    async findAllFeed(@Req() req, @Query() query) {
+        const follow = this.followService.findAll(mapQueriesToFindManyOptions<Follow>({}))
+        const options = mapQueriesToFindManyOptions<Article>(query, 'title', 'slug', 'shortDescription', 'body')
+        let res = await this.articleService.findAll(options)
 
-    private async didUserFavoriteThisArticle(username: string, slug: string): Promise<boolean> {
-        return !!(await this.favoriteService.findOne({username: username, articleSlug: slug}))
+        return new ListSuccessResponse<IArticle>({
+            listData: await Promise.all(res.map(a => this.mapToResponse(req?.user?.sub, a))),
+            total: await this.articleService.count(options)
+        })
+    }
+
+    private async didUserFavoriteThisArticle(userId: string, slug: string): Promise<boolean> {
+        return !!(await this.favoriteService.findOne({userId: userId, articleSlug: slug}))
     }
 
     private async getArticleFavoritesCount(slug: string): Promise<number> {
@@ -92,12 +105,12 @@ export class ArticleApiHandlersController {
         return await this.favoriteService.count(options)
     }
 
-    mapToResponse = async (requestUsername: string, article: Article): Promise<IArticle> => {
+    mapToResponse = async (requestUserId: string, article: Article): Promise<IArticle> => {
         return {
             ...article,
-            favorited: await this.didUserFavoriteThisArticle(requestUsername, article?.slug),
+            favorited: await this.didUserFavoriteThisArticle(requestUserId, article?.slug),
             favoritesCount: await this.getArticleFavoritesCount(article?.slug),
-            author: await this.userService.getProfile(requestUsername, article?.authorUsername)
+            author: await this.userService.getProfile(requestUserId, article?.authorId)
         }
     }
 }

@@ -39,7 +39,7 @@ export class UserApiHandlersController {
 
     @Get('user')
     async getCurrentUser(@Req() req) {
-        const {password, ...user} = (await this.userService.findOne({username: req?.user?.sub})) || {}
+        const {password, ...user} = (await this.userService.findOne({id: req?.user?.sub})) || {}
 
         return new DetailSuccessResponse<Partial<IUser>>({
             detailData: user

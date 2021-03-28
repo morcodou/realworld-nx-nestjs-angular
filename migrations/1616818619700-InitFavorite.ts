@@ -16,7 +16,7 @@ export class InitFavorite1616818619700 implements MigrationInterface {
             columns: [
                 ...DEFAULT_COLUMNS,
                 {
-                    name: 'username',
+                    name: 'userId',
                     type: 'varchar',
                     length: '255'
                 },

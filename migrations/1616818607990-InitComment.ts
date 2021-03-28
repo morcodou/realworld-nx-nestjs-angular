@@ -21,7 +21,7 @@ export class InitComment1616818607990 implements MigrationInterface {
                     length: '255'
                 },
                 {
-                    name: 'authorUsername',
+                    name: 'authorId',
                     type: 'varchar',
                     length: '255'
                 },

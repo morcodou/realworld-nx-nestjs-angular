@@ -12,7 +12,7 @@ export abstract class Article extends BaseEntity {
   @Column()
   body: string;
   @Column()
-  authorUsername: string;
+  authorId: string;
   @Column("json", {array: true})
   tagList: string[];
 }

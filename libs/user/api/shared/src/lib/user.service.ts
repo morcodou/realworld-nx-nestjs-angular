@@ -25,7 +25,7 @@ export class UserService extends BaseService<User> {
         let user = await this.validateUser(data.email, data.password)
         return {
             ...user as IUser,
-            token: await this.generateJWTToken({sub: user.username, email: user.email}),
+            token: await this.generateJWTToken({sub: user.id, email: user.email, username: user.username}),
         }
     }
 
@@ -45,12 +45,12 @@ export class UserService extends BaseService<User> {
         return {
             ...user,
             password: null,
-            token: await this.generateJWTToken({sub: user.username, email: user.email}),
+            token: await this.generateJWTToken({sub: user.id, email: user.email, username: user.username}),
         }
     }
 
-    async updateUserInfo(username: string, data: Partial<IUpdateUser>) {
-        const user = await this.findOne({username: username})
+    async updateUserInfo(userId: string, data: Partial<IUpdateUser>) {
+        const user = await this.findOne({id: userId})
         if (!user) {
             throw new BadRequestException(INVALID_ACCOUNT_MSG)
         }
@@ -61,17 +61,17 @@ export class UserService extends BaseService<User> {
             delete data.password
         }
 
-        await this.update({username: username}, data)
+        await this.update({id: userId}, data)
         const newUserInfo = {...user, ...data}
 
         return {
             ...newUserInfo, 
             password: null,
-            token: await this.generateJWTToken({sub: newUserInfo.username, email: newUserInfo.email}),
+            token: await this.generateJWTToken({sub: userId, email: newUserInfo.email, username: newUserInfo.username}),
         }
     }
 
-    async getProfile(requestUsername: string, profileUsername: string): Promise<IProfile> {
+    async getProfile(requestUserId: string, profileUsername: string): Promise<IProfile> {
         const user = await this.findOne({username: profileUsername})
         if(!user) {
             throw new NotFoundException(NOT_FOUND_MSG)
@@ -82,8 +82,8 @@ export class UserService extends BaseService<User> {
             bio: user.bio,
             image: user.image,
             following: !!(await this.followService.findOne({
-                followingUsername: requestUsername, 
-                followedUsername: profileUsername
+                followerId: requestUserId, 
+                followedId: user.id
             }))
         }   
     }
@@ -113,13 +113,9 @@ export class UserService extends BaseService<User> {
 
     private async generateJWTToken(data: {
         sub: string
-        email: string
+        email: string,
+        username: string
     }): Promise<string> {
-        const jwtPayload = { 
-            email: data.email, 
-            sub: data.sub
-        }
-
-        return this.jwtService.sign(jwtPayload)
+        return this.jwtService.sign(data)
     }
 }

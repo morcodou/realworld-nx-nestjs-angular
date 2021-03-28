@@ -35,7 +35,7 @@ export class InitArticle1616818598875 implements MigrationInterface {
                     type: 'text',
                 },
                 {
-                    name: 'authorUsername',
+                    name: 'authorId',
                     type: 'varchar',
                     length: '255',
                 },

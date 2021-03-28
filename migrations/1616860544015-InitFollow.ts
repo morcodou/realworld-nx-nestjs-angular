@@ -4,6 +4,7 @@ import { DB_ENGINE, DEFAULT_COLUMNS } from "./migration.helper";
 export class InitFollow1616860544015 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
+        this.initFollowTable(queryRunner)
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
@@ -15,12 +16,12 @@ export class InitFollow1616860544015 implements MigrationInterface {
             columns: [
                 ...DEFAULT_COLUMNS,
                 {
-                    name: 'followingUsername',
+                    name: 'followerId',
                     type: 'varchar',
                     length: '255'
                 },
                 {
-                    name: 'followedUsername',
+                    name: 'followedId',
                     type: 'varchar',
                     length: '255'
                 },

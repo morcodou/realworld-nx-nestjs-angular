@@ -6,7 +6,7 @@ export abstract class Comment extends BaseEntity {
   @Column()
   articleSlug: string;
   @Column()
-  authorUsername: string;
+  authorId: string;
   @Column()
   body: string;
 }
