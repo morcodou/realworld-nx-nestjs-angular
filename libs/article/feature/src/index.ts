@@ -1,1 +1,1 @@
-export * from './lib/article-feature.module';
+export * from './lib/home/home.module';

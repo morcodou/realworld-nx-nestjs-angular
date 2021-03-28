@@ -1,0 +1,21 @@
+<div class="article-preview">
+    <div class="article-meta">
+        <a *ngIf="article?.author?.image" [routerLink]="'/@' + article?.author?.username"><img [src]="article?.author?.image" /></a>
+        <div class="info">
+            <a [routerLink]="'/@' + article?.author?.username" class="author">{{article?.author?.username}}</a>
+            <span class="date">{{article?.createdAt | date}}</span>
+        </div>
+        <button 
+            class="btn btn-sm pull-xs-right"
+            [class.btn-outline-primary]="!article?.favorited"
+            [class.btn-danger]="article?.favorited"
+            >
+            <i class="ion-heart"></i> {{article?.favoritesCount || 0}}
+        </button>
+    </div>
+    <a [routerLink]="['/article', article?.slug]" class="preview-link">
+        <h1>{{article?.title}}</h1>
+        <p>{{article?.description}}</p>
+        <span>Read more...</span>
+    </a>
+</div>
