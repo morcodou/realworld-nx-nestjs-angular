@@ -1,12 +1,15 @@
-import { Body, Controller, Get, NotAcceptableException, Post, Put, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotAcceptableException, Param, Post, Put, Req } from '@nestjs/common';
 import { LOGGED_IN_MSG, REGISTERED_MSG, UPDATED_MSG } from '@realworld/shared/api/constants';
 import { ActionSuccessResponse, DetailSuccessResponse, IResponse } from '@realworld/shared/client-server';
-import { IUpdateUser, IUser, ILoginUser, INewUser } from '@realworld/user/api-interfaces';
-import { SkipAuth, UserService } from '@realworld/user/api/shared';
+import { IUpdateUser, IUser, ILoginUser, INewUser, IProfile } from '@realworld/user/api-interfaces';
+import { FollowService, SkipAuth, UserService } from '@realworld/user/api/shared';
 
 @Controller()
 export class UserApiHandlersController {
-    constructor(private userService: UserService) { }
+    constructor(
+        private userService: UserService,
+        private followService: FollowService
+    ) { }
 
     @SkipAuth()
     @Post('users/login')
@@ -29,7 +32,7 @@ export class UserApiHandlersController {
     }
 
     @Put('users')
-    async update(@Req() req, @Body() data: Partial<IUpdateUser>) {
+    async update(@Req() req, @Body() data: Partial<IUpdateUser>): Promise<IResponse<IUser>> {
         const user = await this.userService.updateUserInfo(req?.user?.sub, data)
         return new ActionSuccessResponse<Partial<IUser>>({
             message: UPDATED_MSG,
@@ -38,11 +41,36 @@ export class UserApiHandlersController {
     }
 
     @Get('user')
-    async getCurrentUser(@Req() req) {
+    async getCurrentUser(@Req() req): Promise<IResponse<IUser>> {
         const {password, ...user} = (await this.userService.findOne({id: req?.user?.sub})) || {}
 
         return new DetailSuccessResponse<Partial<IUser>>({
             detailData: user
+        })
+    }
+    
+    @Get('profiles/:username')
+    async getProfile(@Req() req, @Param('username') username: string): Promise<IResponse<IProfile>> {
+        return new DetailSuccessResponse<Partial<IProfile>>({
+            detailData: await this.userService.getProfile(req?.user?.sub, username)
+        })
+    }
+
+    @Post('profiles/:username/follow')
+    async followAUser(@Req() req, @Param('username') username: string): Promise<IResponse<IProfile>> {
+        await this.followService.insert({followedId: username, followerId: req?.user?.sub})
+
+        return new DetailSuccessResponse<Partial<IProfile>>({
+            detailData: await this.userService.getProfile(req?.user?.sub, username)
+        })
+    }
+    
+    @Delete('profiles/:username/follow')
+    async unfollowAUser(@Req() req, @Param('username') username: string): Promise<IResponse<IProfile>> {
+        await this.followService.softDelete({followedId: username, followerId: req?.user?.sub})
+
+        return new DetailSuccessResponse<Partial<IProfile>>({
+            detailData: await this.userService.getProfile(req?.user?.sub, username)
         })
     }
 }

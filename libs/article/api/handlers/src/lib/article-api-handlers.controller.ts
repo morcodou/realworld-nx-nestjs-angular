@@ -3,7 +3,7 @@ import { IArticle, IComment, INewArticle, INewComment, IUpdateArticle } from '@r
 import { Article, ArticleService, Favorite, FavoriteService, TagService, Comment, CommentService } from '@realworld/article/api/shared';
 import { CREATED_MSG, DELETED_MSG, NOT_FOUND_MSG, UPDATED_MSG } from '@realworld/shared/api/constants';
 import { mapQueriesToFindManyOptions } from '@realworld/shared/api/foundation';
-import { ActionSuccessResponse, DetailSuccessResponse, ListSuccessResponse } from '@realworld/shared/client-server';
+import { ActionSuccessResponse, DetailSuccessResponse, IResponse, ListSuccessResponse } from '@realworld/shared/client-server';
 import { StringUtil } from '@realworld/shared/string-util';
 import { Follow, FollowService, SkipAuth, UserService } from '@realworld/user/api/shared';
 import { In } from 'typeorm';
@@ -22,7 +22,7 @@ export class ArticleApiHandlersController {
     // Article apis
 
     @Post('articles')
-    async create(@Req() req, @Body() data: Partial<INewArticle>) {
+    async create(@Req() req, @Body() data: Partial<INewArticle>): Promise<IResponse<IArticle>> {
         let article: Partial<Article> = {
             ...data,
             authorId: req?.user?.sub,
@@ -41,7 +41,7 @@ export class ArticleApiHandlersController {
     }
 
     @Put('articles/:slug')
-    async update(@Req() req, @Param('slug') slug, @Body() data: Partial<IUpdateArticle>) {
+    async update(@Req() req, @Param('slug') slug, @Body() data: Partial<IUpdateArticle>): Promise<IResponse<IArticle>> {
         const { title, description, body } = data
         let article: Partial<Article> = {}
         if (title) { article.title = title }
@@ -57,7 +57,7 @@ export class ArticleApiHandlersController {
     }
 
     @Delete('articles/:slug')
-    async delete(@Param('slug') slug: string) {
+    async delete(@Param('slug') slug: string): Promise<IResponse<null>> {
         const article = await this.articleService.findOne({slug: slug})
         if (!article) {
             throw new NotFoundException(NOT_FOUND_MSG)
@@ -73,7 +73,7 @@ export class ArticleApiHandlersController {
 
     @SkipAuth()
     @Get('articles/:slug')
-    async findBySlug(@Req() req, @Param('slug') slug: string) {
+    async findBySlug(@Req() req, @Param('slug') slug: string): Promise<IResponse<IArticle>> {
         let article = await this.articleService.findOne({ slug: slug })
         if (!article) {
             throw new NotFoundException(NOT_FOUND_MSG)
@@ -86,7 +86,7 @@ export class ArticleApiHandlersController {
 
     @SkipAuth()
     @Get('articles')
-    async findAll(@Req() req, @Query() query) {
+    async findAll(@Req() req, @Query() query): Promise<IResponse<IArticle>> {
         const options = mapQueriesToFindManyOptions<Article>(query, 'title', 'slug', 'shortDescription', 'body')
         let res = await this.articleService.findAll(options)
 
@@ -97,7 +97,7 @@ export class ArticleApiHandlersController {
     }
     
     @Get('articles/feed')
-    async findAllFeed(@Req() req, @Query() query) {
+    async findAllFeed(@Req() req, @Query() query): Promise<IResponse<IArticle>> {
         const follows = await this.followService.findAll(mapQueriesToFindManyOptions<Follow>({followerId: req?.user?.sub}))
         const followedIds = follows.map(f => f.followedId)
 
@@ -116,7 +116,7 @@ export class ArticleApiHandlersController {
     // Favorite apis
 
     @Post('articles/:slug/favorite')
-    async favoriteAnArticle(@Req() req, @Param('slug') slug) {
+    async favoriteAnArticle(@Req() req, @Param('slug') slug): Promise<IResponse<IArticle>> {
         const isFavorited = !!this.favoriteService.findOne({userId: req?.user?.sub, articleSlug: slug})
         if (!isFavorited) {
             await this.favoriteService.insert({userId: req?.user?.sub, articleSlug: slug})
@@ -129,7 +129,7 @@ export class ArticleApiHandlersController {
     }
     
     @Delete('articles/:slug/favorite')
-    async unfavoriteAnArticle(@Req() req, @Param('slug') slug) {
+    async unfavoriteAnArticle(@Req() req, @Param('slug') slug): Promise<IResponse<IArticle>> {
         const isFavorited = !!this.favoriteService.findOne({userId: req?.user?.sub, articleSlug: slug})
         if (isFavorited) {
             await this.favoriteService.softDelete({userId: req?.user?.sub, articleSlug: slug})
@@ -144,7 +144,7 @@ export class ArticleApiHandlersController {
     // Comment apis
 
     @Get('articles/:slug/comments')
-    async findAllComments(@Req() req, @Param('slug') slug: string) {
+    async findAllComments(@Req() req, @Param('slug') slug: string): Promise<IResponse<IComment>> {
         const options = mapQueriesToFindManyOptions<Comment>({articleSlug: slug})
         let res = await this.commentService.findAll(options)
 
@@ -155,7 +155,7 @@ export class ArticleApiHandlersController {
     }
     
     @Post('articles/:slug/comments')
-    async createAComment(@Req() req, @Param('slug') slug: string, @Body() data: INewComment) {
+    async createAComment(@Req() req, @Param('slug') slug: string, @Body() data: INewComment): Promise<IResponse<IComment>> {
         let comment: Partial<Comment> = {
             ...data,
             authorId: req?.user?.sub,
@@ -170,7 +170,7 @@ export class ArticleApiHandlersController {
     }
     
     @Delete('articles/:slug/comments/:id')
-    async deleteAComment(@Param('slug') slug: string, @Param('id') id: string) {
+    async deleteAComment(@Param('slug') slug: string, @Param('id') id: string): Promise<IResponse<null>> {
         await this.commentService.softDelete({articleSlug: slug, id: id})
         return new ActionSuccessResponse({
             message: DELETED_MSG,
@@ -182,7 +182,7 @@ export class ArticleApiHandlersController {
 
     @SkipAuth()
     @Get('tags')
-    async findAllTags(@Req() req, @Query() query) {
+    async findAllTags(@Req() req, @Query() query): Promise<IResponse<string>> {
         let tags = await this.tagService.findAll()
 
         return new ListSuccessResponse<string>({
