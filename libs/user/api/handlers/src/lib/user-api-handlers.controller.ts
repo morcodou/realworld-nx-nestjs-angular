@@ -52,7 +52,7 @@ export class UserApiHandlersController {
     @Get('profiles/:username')
     async getProfile(@Req() req, @Param('username') username: string): Promise<IResponse<IProfile>> {
         return new DetailSuccessResponse<Partial<IProfile>>({
-            detailData: await this.userService.getProfile(req?.user?.sub, username)
+            detailData: await this.userService.getProfile(req?.user?.sub, username, 'username')
         })
     }
 
@@ -61,7 +61,7 @@ export class UserApiHandlersController {
         await this.followService.insert({followedId: username, followerId: req?.user?.sub})
 
         return new DetailSuccessResponse<Partial<IProfile>>({
-            detailData: await this.userService.getProfile(req?.user?.sub, username)
+            detailData: await this.userService.getProfile(req?.user?.sub, username, 'username')
         })
     }
     
@@ -70,7 +70,7 @@ export class UserApiHandlersController {
         await this.followService.softDelete({followedId: username, followerId: req?.user?.sub})
 
         return new DetailSuccessResponse<Partial<IProfile>>({
-            detailData: await this.userService.getProfile(req?.user?.sub, username)
+            detailData: await this.userService.getProfile(req?.user?.sub, username, 'username')
         })
     }
 }

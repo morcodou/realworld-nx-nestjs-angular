@@ -13,6 +13,11 @@ const routes: Routes = [
           .then(m => m.HomeModule)
       },
       { 
+        path: 'editor', 
+        loadChildren: () => import('@realworld/article/feature')
+          .then(m => m.EditorModule)
+      },
+      { 
         path: 'login', 
         loadChildren: () => import('@realworld/user/feature')
           .then(m => m.LoginModule)

@@ -23,6 +23,9 @@ export class ArticleApiHandlersController {
 
     @Post('articles')
     async create(@Req() req, @Body() data: Partial<INewArticle>): Promise<IResponse<IArticle>> {
+        console.log('create article', req.user, data)
+        delete (data as any)?.id 
+
         let article: Partial<Article> = {
             ...data,
             authorId: req?.user?.sub,
@@ -238,16 +241,16 @@ export class ArticleApiHandlersController {
     mapToResponseArticle = async (requestUserId: string, article: Article): Promise<IArticle> => {
         return {
             ...article,
-            favorited: await this.didUserFavoriteThisArticle(requestUserId, article?.slug),
+            favorited: requestUserId ? await this.didUserFavoriteThisArticle(requestUserId, article?.slug) : false,
             favoritesCount: await this.getArticleFavoritesCount(article?.slug),
-            author: await this.userService.getProfile(requestUserId, article?.authorId)
+            author: await this.userService.getProfile(requestUserId, article?.authorId, 'id')
         }
     }
 
     mapToResponseComment = async (requestUserId: string, comment: Comment): Promise<IComment> => {
         return {
             ...comment,
-            author: await this.userService.getProfile(requestUserId, comment?.authorId)
+            author: await this.userService.getProfile(requestUserId, comment?.authorId, 'id')
         }
     }
 }

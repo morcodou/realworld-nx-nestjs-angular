@@ -71,8 +71,10 @@ export class UserService extends BaseService<User> {
         }
     }
 
-    async getProfile(requestUserId: string, profileUsername: string): Promise<IProfile> {
-        const user = await this.findOne({username: profileUsername})
+    async getProfile(requestUserId: string, profile: string, field: 'id'|'username'): Promise<IProfile> {
+        let condition = {}
+        condition[field] = profile
+        const user = await this.findOne(condition)
         if(!user) {
             throw new NotFoundException(NOT_FOUND_MSG)
         }
@@ -81,7 +83,7 @@ export class UserService extends BaseService<User> {
             username: user.username,
             bio: user.bio,
             image: user.image,
-            following: !!(await this.followService.findOne({
+            following: !requestUserId ? false : !!(await this.followService.findOne({
                 followerId: requestUserId, 
                 followedId: user.id
             }))

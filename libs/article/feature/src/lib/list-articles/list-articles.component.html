@@ -1,10 +1,10 @@
 <ng-container *ngIf="articles?.length; else noPosts;">
     <realworld-article-item 
         *ngFor="let item of articles"
-        [article]=""
+        [article]="item"
         ></realworld-article-item>
     <div class="row">
-        <div class="col-12 d-flex justify-content-center">
+        <div class="col-12">
           <ngb-pagination 
             [pageSize]="pageSize"
             [collectionSize]="collectionSize"
