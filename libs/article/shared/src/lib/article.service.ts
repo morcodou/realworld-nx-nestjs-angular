@@ -1,6 +1,8 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { IArticle } from "@realworld/article/api-interfaces";
 import { ActionSuccessResponse, ListSuccessResponse } from "@realworld/shared/client-server";
+import { IConfigurationService } from "@realworld/shared/configuration";
 import { BaseDataService, IPage, IPageRequest, IQuery } from "@realworld/shared/foundation";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
@@ -10,6 +12,13 @@ import { IArticleService } from "./i-article.service";
 export class ArticleService extends BaseDataService<IArticle> implements IArticleService {
     protected get endpoint(): string {
         return 'articles'
+    }
+
+    constructor(
+        config: IConfigurationService,
+        protected http: HttpClient
+    ) {
+        super(config, http)
     }
 
     getFeed(req: IPageRequest<IArticle>, query: IQuery, loading = true): Observable<IPage<IArticle>> {

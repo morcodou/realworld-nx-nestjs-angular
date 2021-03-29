@@ -7,4 +7,4 @@ import { ArticleItemComponent } from './article-item.component';
   declarations: [ArticleItemComponent],
   exports: [ArticleItemComponent],
 })
-export class HomeModule {}
+export class ArticleItemModule {}

@@ -97,14 +97,14 @@ export class UserService extends BaseService<User> {
         }
 
         // strip out unnecessary fields
-        const {password, email, username, bio, image, ..._} = user
+        const {password, email, username, bio, image, id, ..._} = user
 
         const validPass = await bcrypt.compare(passwordLogin, password)
         if(!validPass) {
             throw new BadRequestException(INVALID_ACCOUNT_MSG)
         }
 
-        return { email, username, bio, image }
+        return { id, email, username, bio, image }
     }
 
     private async hashPassword(raw: string): Promise<string> {

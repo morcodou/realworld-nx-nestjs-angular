@@ -1,0 +1,20 @@
+<ng-container *ngIf="articles?.length; else noPosts;">
+    <realworld-article-item 
+        *ngFor="let item of articles"
+        [article]=""
+        ></realworld-article-item>
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+          <ngb-pagination 
+            [pageSize]="pageSize"
+            [collectionSize]="collectionSize"
+            [page]="page" 
+            (pageChange)="pageChange.emit($event)"
+            ></ngb-pagination>
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #noPosts>
+    <ng-container>Nothing to display.</ng-container>
+</ng-template>
