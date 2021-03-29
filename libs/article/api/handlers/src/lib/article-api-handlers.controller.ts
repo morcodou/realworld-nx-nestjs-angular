@@ -6,7 +6,7 @@ import { mapQueriesToFindManyOptions } from '@realworld/shared/api/foundation';
 import { ActionSuccessResponse, DetailSuccessResponse, IResponse, ListSuccessResponse } from '@realworld/shared/client-server';
 import { StringUtil } from '@realworld/shared/string-util';
 import { Follow, FollowService, SkipAuth, UserService } from '@realworld/user/api/shared';
-import { In } from 'typeorm';
+import { In, Like } from 'typeorm';
 
 @Controller()
 export class ArticleApiHandlersController {
@@ -87,9 +87,31 @@ export class ArticleApiHandlersController {
     @SkipAuth()
     @Get('articles')
     async findAll(@Req() req, @Query() query): Promise<IResponse<IArticle>> {
-        const options = mapQueriesToFindManyOptions<Article>(query, 'title', 'slug', 'shortDescription', 'body')
-        let res = await this.articleService.findAll(options)
+        const {tag, author, favorited} = query
+        delete query.author
+        delete query.tag
+        delete query.favorited
 
+        if (author) {
+            const user = await this.userService.findOne({username: author})
+            if (user) {query.authorId = user.id} 
+        }
+        if (tag) { query.tag = Like(`%${tag}%`) }
+
+        const options = mapQueriesToFindManyOptions<Article>(query, 'title', 'slug', 'shortDescription', 'body')
+
+        if (favorited) {
+            options.relations = ['favorite'];
+            const user = await this.userService.findOne({username: favorited});
+            if (user) {
+                (options.where as any[]).forEach(c => {
+                    return {...c, userId: user.id}
+                });
+            }
+        }
+
+
+        let res = await this.articleService.findAll(options)
         return new ListSuccessResponse<IArticle>({
             listData: await Promise.all(res.map(a => this.mapToResponseArticle(req?.user?.sub, a))),
             total: await this.articleService.count(options)

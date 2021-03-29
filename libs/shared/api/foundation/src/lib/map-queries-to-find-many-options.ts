@@ -10,7 +10,9 @@ export function mapQueriesToFindManyOptions<Entity>(query, ...searchColumns: str
 
   // paging
   options.skip = offset || 0
-  options.take = limit || 20
+  if (limit) {
+    options.take = limit
+  }
 
   // ordering
   if (orderBy && orderType) {

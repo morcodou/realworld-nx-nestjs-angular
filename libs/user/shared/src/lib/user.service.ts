@@ -37,8 +37,9 @@ export class UserService extends BaseDataService<IUser> implements IUserService 
         this.isAuth = !!user
     }
 
-    login(body: ILoginUser): Observable<ActionSuccessResponse<IUser>> {
+    login(body: ILoginUser, loading = true): Observable<ActionSuccessResponse<IUser>> {
         let url = this.getURLFromEndpoint({ endpoint: 'users/login' })
+        this.setLoading(loading ? 'show' : 'not-show')
         let options = { ...this.defaultOptions }
         return this.http.post<ActionSuccessResponse<IUser>>(url, body, options)
             .pipe(tap(res => {
@@ -47,8 +48,9 @@ export class UserService extends BaseDataService<IUser> implements IUserService 
             }))
     }
 
-    register(data: INewUser): Observable<ActionSuccessResponse<IUser>> {
+    register(data: INewUser, loading = true): Observable<ActionSuccessResponse<IUser>> {
         let url = this.getURLFromEndpoint({ endpoint: 'users' })
+        this.setLoading(loading ? 'show' : 'not-show')
         return this.http.post<ActionSuccessResponse<IUser>>(url, data, this.defaultOptions)
             .pipe(tap(res => {
                 this.updateAuthState(res.data as IUser)
@@ -67,8 +69,9 @@ export class UserService extends BaseDataService<IUser> implements IUserService 
             }))
     }
 
-    getCurrentUser(): Observable<DetailSuccessResponse<Partial<IUser>>> {
+    getCurrentUser(loading = true): Observable<DetailSuccessResponse<Partial<IUser>>> {
         let url = this.getURLFromEndpoint({ endpoint: 'user' })
+        this.setLoading(loading ? 'show' : 'not-show')
         return this.http.get<DetailSuccessResponse<Partial<IUser>>>(url, this.defaultOptions)
     }
 

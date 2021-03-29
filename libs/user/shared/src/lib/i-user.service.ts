@@ -12,10 +12,9 @@ import { UserService } from "./user.service";
 export abstract class IUserService extends IBaseDataService<IUser> {
     isAuth: boolean
     userInfo: IUser | null
-
     abstract updateAuthState(user: IUser|null)
-    abstract login(body: ILoginUser): Observable<ActionSuccessResponse<IUser>>
+    abstract login(body: ILoginUser, loading?:boolean): Observable<ActionSuccessResponse<IUser>>
     abstract logout()
-    abstract register(data: INewUser): Observable<ActionSuccessResponse<IUser>>
-    abstract getCurrentUser(): Observable<DetailSuccessResponse<Partial<IUser>>>
+    abstract register(data: INewUser, loading?:boolean): Observable<ActionSuccessResponse<IUser>>
+    abstract getCurrentUser(loading?:boolean): Observable<DetailSuccessResponse<Partial<IUser>>>
 }
