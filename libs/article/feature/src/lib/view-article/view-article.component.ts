@@ -44,7 +44,9 @@ export class ViewArticleComponent implements OnInit {
             await this.loadArticle(slug)
           }
 
-          this.loadComments()
+          if (this.userService.isAuth) {
+            this.loadComments()
+          }
         })
       )
       .subscribe()
