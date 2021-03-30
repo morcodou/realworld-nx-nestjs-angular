@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IArticle } from '@realworld/article/api-interfaces';
+import { IUser } from '@realworld/user/api-interfaces';
 
 @Component({
   selector: 'realworld-article-author',
@@ -9,8 +10,11 @@ import { IArticle } from '@realworld/article/api-interfaces';
 })
 export class ArticleAuthorComponent implements OnInit {
   @Input() article: IArticle
+  @Input() currentUser: IUser
+
   @Output() toggleFavorite = new EventEmitter<boolean>()
   @Output() toggleFollow = new EventEmitter<boolean>()
+  @Output() delete = new EventEmitter<void>()
 
   constructor() { 
   }

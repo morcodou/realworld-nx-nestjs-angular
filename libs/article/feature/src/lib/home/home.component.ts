@@ -24,7 +24,12 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.toggleFeed('global')
+    if (this.userService?.isAuth) {
+      this.toggleFeed('personal')
+    } else {
+      this.toggleFeed('global')
+    }
+    
     this.tags$ = this.tagService.getAll({
       limit: 10, 
       pageIndex: 0, 

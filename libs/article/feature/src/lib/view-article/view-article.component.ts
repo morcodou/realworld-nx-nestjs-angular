@@ -93,4 +93,9 @@ export class ViewArticleComponent implements OnInit {
     this.article.author = res.data as IProfile
   }
 
+  async delete() {
+    await this.articleService.delete(this.article?.slug).toPromise()
+    this.router.navigateByUrl('/')
+  }
+
 }

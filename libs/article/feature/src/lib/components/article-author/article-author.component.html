@@ -7,25 +7,49 @@
         <span class="date">{{article?.author?.createdAt | date}}</span>
     </div>
 
-    <button 
-        class="btn btn-sm"
-        [class.btn-success]="article?.author?.following"
-        [class.btn-outline-primary]="!article?.author?.following"
-        (click)="toggleFollow.emit(!article?.author?.following)"
-        >
-        <i class="ion-plus-round"></i>
-        &nbsp;
-        {{article?.author?.following ? 'Unfollow' : 'Follow'}} {{article?.author?.username}}
-    </button>
-    &nbsp;&nbsp;
-    <button 
-        class="btn btn-sm"
-        [class.btn-success]="article?.favorited"
-        [class.btn-outline-primary]="!article?.favorited"
-        (click)="toggleFavorite.emit(!article?.favorited)"
-        >
-        <i class="ion-heart"></i>
-        &nbsp;
-        {{article?.favorited ? 'Unfavorite' : 'Favorite'}} Post <span class="counter">({{article?.favoritesCount || 0}})</span>
-    </button>
+    <ng-container *ngIf="currentUser?.username !== article?.author?.username; else editDelete">
+        <button 
+            class="btn btn-sm"
+            [class.btn-success]="article?.author?.following"
+            [class.btn-outline-primary]="!article?.author?.following"
+            (click)="toggleFollow.emit(!article?.author?.following)"
+            >
+            <i class="ion-plus-round"></i>
+            &nbsp;
+            {{article?.author?.following ? 'Unfollow' : 'Follow'}} {{article?.author?.username}}
+        </button>
+        &nbsp;&nbsp;
+        <button 
+            class="btn btn-sm"
+            [class.btn-success]="article?.favorited"
+            [class.btn-outline-primary]="!article?.favorited"
+            (click)="toggleFavorite.emit(!article?.favorited)"
+            >
+            <i class="ion-heart"></i>
+            &nbsp;
+            {{article?.favorited ? 'Unfavorite' : 'Favorite'}} Post <span class="counter">({{article?.favoritesCount || 0}})</span>
+        </button>
+    </ng-container>
+    
+    <ng-template #editDelete>
+        <a 
+            class="btn btn-sm btn-outline-primary"
+            [routerLink]="['/editor', article?.slug]"
+            [state]="{data: article}"
+            >
+            <i class="ion-edit"></i>
+            &nbsp;
+            Edit Article
+        </a>
+        &nbsp;&nbsp;
+        <button 
+            class="btn btn-sm btn-outline-danger"
+            (click)="delete.emit()"
+            >
+            <i class="ion-trash-a"></i>
+            &nbsp;
+            Delete Article
+        </button>
+    </ng-template>
+
 </div>
