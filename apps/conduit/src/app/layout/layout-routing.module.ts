@@ -18,6 +18,11 @@ const routes: Routes = [
           .then(m => m.EditorModule)
       },
       { 
+        path: 'article/:slug', 
+        loadChildren: () => import('@realworld/article/feature')
+          .then(m => m.ViewArticleModule)
+      },
+      { 
         path: 'login', 
         loadChildren: () => import('@realworld/user/feature')
           .then(m => m.LoginModule)
