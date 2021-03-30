@@ -24,7 +24,7 @@ export class CommentService extends BaseDataService<IComment> implements ICommen
     getAllComments(slug: string, loading = true): Observable<IPage<IComment>> {
         let url = this.getURLFromEndpoint({ endpoint: `articles/${slug}/comments` })
         this.setLoading(loading ? 'show' : 'not-show')
-        let options = this.getAllOptions<IComment>(null, null)
+        let options = this.getAllOptions<IComment>({order: {orderBy: 'createdAt', orderType: 'desc'}}, null)
 
         return this.http.get<ListSuccessResponse<IComment>>(url, options).pipe(
             map(res => this.mapGetAllRes<IComment>(res, 0, null))
@@ -39,7 +39,7 @@ export class CommentService extends BaseDataService<IComment> implements ICommen
     }
     
     deleteComments(slug: string, id: string, loading = true): Observable<ActionSuccessResponse<null>> {
-        let url = this.getURLFromEndpoint({ endpoint: `articles/${slug}/comments` })
+        let url = this.getURLFromEndpoint({ endpoint: `articles/${slug}/comments/${id}` })
         this.setLoading(loading ? 'show' : 'not-show')
         let options = { ...this.defaultOptions }
         return this.http.delete<ActionSuccessResponse<null>>(url, options)

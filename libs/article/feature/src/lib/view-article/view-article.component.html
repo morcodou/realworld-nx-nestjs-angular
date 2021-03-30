@@ -40,29 +40,36 @@
 
         <div class="row">
             <div class="col-xs-12 col-md-8 offset-md-2">
-                <form class="card comment-form">
+                <p *ngIf="!userService?.isAuth" style="display: inherit;">
+                    <a ui-sref="app.login" href="#/login">Sign in</a> or <a ui-sref="app.register" href="#/register">sign up</a> to add comments on this article.
+                </p>
+
+                <form *ngIf="userService?.isAuth" class="card comment-form" [formGroup]="commentForm" (ngSubmit)="commentForm.valid&&postComment()">
                     <div class="card-block">
-                        <textarea class="form-control" placeholder="Write a comment..." rows="3"></textarea>
+                        <textarea formControlName="body" class="form-control" placeholder="Write a comment..." rows="3"></textarea>
                     </div>
                     <div class="card-footer">
-                        <img src="http://i.imgur.com/Qr71crq.jpg" class="comment-author-img" />
-                        <button class="btn btn-sm btn-primary">
+                        <img *ngIf="userService?.userInfo?.image" [src]="userService?.userInfo?.image" class="comment-author-img" />
+                        <button class="btn btn-sm btn-primary" type="submit">
                             Post Comment
                         </button>
                     </div>
                 </form>
 
-                <div class="card">
+                <div class="card" *ngFor="let c of comments">
                     <div class="card-block">
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <p class="card-text">{{c?.body}}</p>
                     </div>
                     <div class="card-footer">
-                        <a href="" class="comment-author">
-                            <img src="http://i.imgur.com/Qr71crq.jpg" class="comment-author-img" />
+                        <a [routerLink]="'/@'+c?.author?.username" class="comment-author">
+                            <img *ngIf="c?.author?.image" [src]="c?.author?.image" class="comment-author-img" />
                         </a>
                         &nbsp;
-                        <a href="" class="comment-author">Jacob Schmidt</a>
-                        <span class="date-posted">Dec 29th</span>
+                        <a [routerLink]="'/@'+c?.author?.username" class="comment-author">{{c?.author?.username}}</a>
+                        <span class="date-posted">{{c?.createdAt | date}}</span>
+                        <span class="mod-options" *ngIf="userService?.userInfo?.username === c?.author?.username">
+                            <i class="ion-trash-a" (click)="deleteComment(c?.id)"></i>
+                        </span>
                     </div>
                 </div>
             </div>

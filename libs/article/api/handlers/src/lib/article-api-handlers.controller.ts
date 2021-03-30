@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, Query, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, Query, Req, UnauthorizedException } from '@nestjs/common';
 import { IArticle, IComment, INewArticle, INewComment, IUpdateArticle } from '@realworld/article/api-interfaces';
 import { Article, ArticleService, Favorite, FavoriteService, TagService, Comment, CommentService } from '@realworld/article/api/shared';
 import { CREATED_MSG, DELETED_MSG, NOT_FOUND_MSG, UPDATED_MSG } from '@realworld/shared/api/constants';
@@ -57,10 +57,14 @@ export class ArticleApiHandlersController {
     }
 
     @Delete('articles/:slug')
-    async delete(@Param('slug') slug: string): Promise<IResponse<null>> {
+    async delete(@Req() req, @Param('slug') slug: string): Promise<IResponse<null>> {
         const article = await this.articleService.findOne({slug: slug})
         if (!article) {
             throw new NotFoundException(NOT_FOUND_MSG)
+        }
+
+        if (article.authorId !== req?.user?.sub) {
+            throw new UnauthorizedException()
         }
 
         await this.articleService.softDelete({ slug: slug })
@@ -193,7 +197,16 @@ export class ArticleApiHandlersController {
     }
     
     @Delete('articles/:slug/comments/:id')
-    async deleteAComment(@Param('slug') slug: string, @Param('id') id: string): Promise<IResponse<null>> {
+    async deleteAComment(@Req() req, @Param('slug') slug: string, @Param('id') id: string): Promise<IResponse<null>> {
+        const comment = await this.commentService.findOne({id: id, articleSlug: slug})
+        if (!comment) {
+            throw new NotFoundException()
+        }
+
+        if (comment.authorId !== req?.user?.sub) {
+            throw new UnauthorizedException()
+        }
+
         await this.commentService.softDelete({articleSlug: slug, id: id})
         return new ActionSuccessResponse({
             message: DELETED_MSG,

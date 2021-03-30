@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IArticle } from '@realworld/article/api-interfaces';
-import { IArticleService } from '@realworld/article/shared';
+import { IArticle, IComment } from '@realworld/article/api-interfaces';
+import { IArticleService, ICommentService } from '@realworld/article/shared';
 import { ActionSuccessResponse } from '@realworld/shared/client-server';
 import { IProfile } from '@realworld/user/api-interfaces';
 import { IProfileService, IUserService } from '@realworld/user/shared';
@@ -15,15 +16,21 @@ import { takeUntil, tap } from 'rxjs/operators';
 })
 export class ViewArticleComponent implements OnInit {
   article: IArticle
+  comments: IComment[] = []
   destroyed = new Subject()
+  commentForm: FormGroup
 
   constructor(
     public userService: IUserService,
     private articleService: IArticleService,
     private profileService: IProfileService,
+    private commentService: ICommentService,
     private route: ActivatedRoute,
-    private router: Router
-  ) { }
+    private router: Router,
+    private fb: FormBuilder
+  ) { 
+    this.initCommentForm()
+  }
 
   ngOnInit() {
     this.route.params
@@ -36,6 +43,8 @@ export class ViewArticleComponent implements OnInit {
             let slug = p['slug']
             await this.loadArticle(slug)
           }
+
+          this.loadComments()
         })
       )
       .subscribe()
@@ -58,6 +67,22 @@ export class ViewArticleComponent implements OnInit {
       this.router.navigate(['/'])
       throw error
     }
+  }
+
+  async loadComments() {
+    const res = await this.commentService.getAllComments(this.article?.slug).toPromise()
+    this.comments = res.data || []
+  }
+
+  async postComment() {
+    const res = await this.commentService.postComment(this.article?.slug, this.commentForm.value).toPromise()
+    this.comments.unshift(res.data as IComment)
+    this.commentForm.reset()
+  }
+  
+  async deleteComment(id: string) {
+    await this.commentService.deleteComments(this.article?.slug, id).toPromise()
+    this.comments = this.comments.filter(c => c.id !== id)
   }
 
   async toggleFavorite($event: boolean) {
@@ -96,6 +121,12 @@ export class ViewArticleComponent implements OnInit {
   async delete() {
     await this.articleService.delete(this.article?.slug).toPromise()
     this.router.navigateByUrl('/')
+  }
+
+  private initCommentForm() {
+    this.commentForm = this.fb.group({
+      body: [null, [Validators.required, Validators.maxLength(1000)]]
+    })
   }
 
 }
