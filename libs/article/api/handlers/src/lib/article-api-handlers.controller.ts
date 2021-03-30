@@ -70,6 +70,24 @@ export class ArticleApiHandlersController {
             data: null
         })
     }
+    
+    @Get('articles/feed')
+    async findAllFeed(@Req() req, @Query() query): Promise<IResponse<IArticle>> {
+        const follows = await this.followService.findAll(mapQueriesToFindManyOptions<Follow>({followerId: req?.user?.sub}))
+        const followedIds = follows.map(f => f.followedId)
+
+        const options = mapQueriesToFindManyOptions<Article>({
+            ...query,
+            authorId: In(followedIds)
+        })
+        let res = await this.articleService.findAll(options)
+
+        return new ListSuccessResponse<IArticle>({
+            listData: await Promise.all(res.map(a => this.mapToResponseArticle(req?.user?.sub, a))),
+            total: await this.articleService.count(options)
+        })
+    }
+
 
     @SkipAuth()
     @Get('articles/:slug')
@@ -112,23 +130,6 @@ export class ArticleApiHandlersController {
 
 
         let res = await this.articleService.findAll(options)
-        return new ListSuccessResponse<IArticle>({
-            listData: await Promise.all(res.map(a => this.mapToResponseArticle(req?.user?.sub, a))),
-            total: await this.articleService.count(options)
-        })
-    }
-    
-    @Get('articles/feed')
-    async findAllFeed(@Req() req, @Query() query): Promise<IResponse<IArticle>> {
-        const follows = await this.followService.findAll(mapQueriesToFindManyOptions<Follow>({followerId: req?.user?.sub}))
-        const followedIds = follows.map(f => f.followedId)
-
-        const options = mapQueriesToFindManyOptions<Article>({
-            ...query,
-            authorId: In(followedIds)
-        })
-        let res = await this.articleService.findAll(options)
-
         return new ListSuccessResponse<IArticle>({
             listData: await Promise.all(res.map(a => this.mapToResponseArticle(req?.user?.sub, a))),
             total: await this.articleService.count(options)
