@@ -25,7 +25,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.toggleFeed('global')
-    this.tags$ = this.tagService.getAll(null, null).pipe(map(res => res.data))
+    this.tags$ = this.tagService.getAll({
+      limit: 10, 
+      pageIndex: 0, 
+      order: {orderBy: 'count' as any, orderType: 'desc'}
+    }, null).pipe(map(res => res.data))
   }
 
   toggleFeed(feedType: 'global'|'personal'|'tag', tag?: string) {

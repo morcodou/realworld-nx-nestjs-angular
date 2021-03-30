@@ -5,4 +5,6 @@ import { BaseEntity } from '@realworld/shared/api/foundation';
 export abstract class Tag extends BaseEntity {
   @Column({ unique: true })
   name: string;
+  @Column()
+  count: number;
 }

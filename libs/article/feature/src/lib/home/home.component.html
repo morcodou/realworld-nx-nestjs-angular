@@ -14,7 +14,6 @@
                         <li class="nav-item" *ngIf="userService?.isAuth">
                             <a 
                                 class="nav-link" 
-                                [class.disabled]="feedType!=='personal'" 
                                 [class.active]="feedType==='personal'"
                                 (click)="toggleFeed('personal')"
                                 >Your Feed</a>
@@ -22,7 +21,6 @@
                         <li class="nav-item">
                             <a 
                                 class="nav-link" 
-                                [class.disabled]="feedType!=='global'" 
                                 [class.active]="feedType==='global'"
                                 (click)="toggleFeed('global')"
                                 >Global Feed</a>
@@ -30,7 +28,6 @@
                         <li class="nav-item" *ngIf="selectedTag && feedType==='tag'">
                             <a 
                                 class="nav-link" 
-                                [class.disabled]="feedType!=='tag'" 
                                 [class.active]="feedType==='tag'"
                                 (click)="toogleFeed('tag')"
                                 >#{{selectedTag}}</a>

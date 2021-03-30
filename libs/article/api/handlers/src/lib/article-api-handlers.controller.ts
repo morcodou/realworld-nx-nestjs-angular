@@ -23,7 +23,6 @@ export class ArticleApiHandlersController {
 
     @Post('articles')
     async create(@Req() req, @Body() data: Partial<INewArticle>): Promise<IResponse<IArticle>> {
-        console.log('create article', req.user, data)
         delete (data as any)?.id 
 
         let article: Partial<Article> = {
@@ -207,8 +206,9 @@ export class ArticleApiHandlersController {
 
     @SkipAuth()
     @Get('tags')
-    async findAllTags(@Req() req, @Query() query): Promise<IResponse<string>> {
-        let tags = await this.tagService.findAll()
+    async findAllTags(@Query() query): Promise<IResponse<string>> {
+        const options = mapQueriesToFindManyOptions(query)
+        let tags = await this.tagService.findAll(options)
 
         return new ListSuccessResponse<string>({
             listData: tags.map(t => t.name),
@@ -218,15 +218,16 @@ export class ArticleApiHandlersController {
 
     // Helper functions
 
-    private updateTags(tagList: string[]) {
-        tagList.forEach(async t => {
+    private async updateTags(tagList: string[]) {
+        for (let t of tagList) {
             t = t.trim()
-            const tagExists = !!(await this.tagService.findOne({name: t}))
-            if (!tagExists) {
-                this.tagService.insert({name: t})
+            const tag = await this.tagService.findOne({name: t})
+            if (!tag) {
+                await this.tagService.insert({name: t, count: 1})
+            } else {
+                await this.tagService.update({id: tag.id}, {count: ++tag.count})
             }
-            
-        })
+        }
     }
 
     private async didUserFavoriteThisArticle(userId: string, slug: string): Promise<boolean> {

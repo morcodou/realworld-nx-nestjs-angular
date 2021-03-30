@@ -20,6 +20,10 @@ export class InitTag1616818613984 implements MigrationInterface {
                     type: 'varchar',
                     length: '255'
                 },
+                {
+                    name: 'count',
+                    type: 'integer',
+                },
             ],
             indices: [{name: 'id-index', columnNames: ['id']}],
             engine: DB_ENGINE.MYISAM
