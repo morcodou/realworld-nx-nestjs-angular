@@ -25,13 +25,15 @@
                 <div class="articles-toggle">
                     <ul class="nav nav-pills outline-active">
                         <li class="nav-item">
-                            <a class="nav-link active" href="">My Articles</a>
+                            <a class="nav-link active" [routerLink]="['/@' + profile?.username]">My Articles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">Favorited Articles</a>
+                            <a class="nav-link" [routerLink]="['/@' + profile?.username + '/favorites']">Favorited Articles</a>
                         </li>
                     </ul>
                 </div>
+
+                <ng-container *ngIf="dataSource?.page$ | async as page"></ng-container>
 
                 <div class="article-preview">
                     <div class="article-meta">

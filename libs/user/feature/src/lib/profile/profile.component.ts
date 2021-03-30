@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { IUserService } from '@realworld/user/shared';
+import { IProfileService, IUserService } from '@realworld/user/shared';
 import { IArticleQuery, IArticleService, ITagService } from '@realworld/article/shared';
 import { IOrder, PaginatedDataSource } from '@realworld/shared/foundation';
 import { IArticle } from '@realworld/article/api-interfaces';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IProfile } from '@realworld/user/api-interfaces';
 
 @Component({
   selector: 'realworld-profile',
@@ -13,18 +14,28 @@ import { ActivatedRoute } from '@angular/router';
 export class ProfileComponent implements OnInit {
   dataSource: PaginatedDataSource<IArticle>
   tabType: 'myArticles'|'favoritedArticles'
+  profile: IProfile
 
   constructor(
     public userService: IUserService,
     private articleService: IArticleService,
-    private route: ActivatedRoute
+    private profileService: IProfileService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
-  ngOnInit() {
-    console.log(this.route.snapshot.url)
+  async ngOnInit() {
+    try {
+      const username = this.route.snapshot?.parent?.url[0]?.path.substring(1).toLocaleLowerCase()
+      this.profile = (await this.profileService.getProfile(username).toPromise())?.detailData as IProfile
+      this.toggleTab('favoritedArticles', username)
+    } catch(error) {
+      this.router.navigateByUrl('/')
+      throw error
+    }
   }
 
-  toggleTab(tabType: 'myArticles'|'favoritedArticles') {
+  toggleTab(tabType: 'myArticles'|'favoritedArticles', username: string) {
     this.tabType = tabType
 
     switch (tabType) {
@@ -32,16 +43,16 @@ export class ProfileComponent implements OnInit {
         this.dataSource = new PaginatedDataSource<IArticle>(
           (req, query) => this.articleService.getAll(req, query),
           <IOrder<IArticle>>{ orderBy: 'createdAt', orderType: 'desc' },
-          <IArticleQuery>{},
+          <IArticleQuery>{author: username},
           0,
           10
         )
         break
       case 'favoritedArticles':
         this.dataSource = new PaginatedDataSource<IArticle>(
-          (req, query) => this.articleService.getFeed(req, query),
+          (req, query) => this.articleService.getAll(req, query),
           <IOrder<IArticle>>{ orderBy: 'createdAt', orderType: 'desc' },
-          <IArticleQuery>{},
+          <IArticleQuery>{favorited: username},
           0,
           10
         )

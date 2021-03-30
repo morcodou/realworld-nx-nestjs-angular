@@ -3,7 +3,6 @@ import { RouterModule, Routes, UrlSegment } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 
 export function profilePathMatcher(url: UrlSegment[]) {
-  console.log('profilePathMatcher', url)
   return url.length >= 1 && url[0].path.startsWith('@') ? ({consumed: url}) : null;
 }
 

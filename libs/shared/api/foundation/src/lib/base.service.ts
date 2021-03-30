@@ -2,7 +2,7 @@ import { FindConditions, FindManyOptions, FindOneOptions, InsertResult, Reposito
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 
 export abstract class BaseService<T> {
-    protected repository: Repository<T>
+    public repository: Repository<T>
 
     async findAll(options?: FindManyOptions<T>): Promise<T[]> {
         return await this.repository.find(options);

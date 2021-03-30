@@ -1,5 +1,5 @@
-import { Column, Entity } from 'typeorm';
 import { BaseEntity } from '@realworld/shared/api/foundation';
+import { Column, Entity } from 'typeorm';
 
 @Entity()
 export abstract class Article extends BaseEntity {
@@ -15,4 +15,8 @@ export abstract class Article extends BaseEntity {
   authorId: string;
   @Column("json", {array: true})
   tagList: string[];
+
+  // @OneToMany('Favorite', (favorite: any) => favorite.article)
+  // @JoinColumn({name: 'slug', referencedColumnName: 'articleSlug'})
+  // favorites: Favorite[]
 }

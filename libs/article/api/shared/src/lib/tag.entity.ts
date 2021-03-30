@@ -1,5 +1,5 @@
-import { Column, Entity } from 'typeorm';
 import { BaseEntity } from '@realworld/shared/api/foundation';
+import { Column, Entity } from 'typeorm';
 
 @Entity()
 export abstract class Tag extends BaseEntity {
