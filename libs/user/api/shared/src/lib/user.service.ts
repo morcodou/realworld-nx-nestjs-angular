@@ -71,14 +71,7 @@ export class UserService extends BaseService<User> {
         }
     }
 
-    async getProfile(requestUserId: string, profile: string, field: 'id'|'username'): Promise<IProfile> {
-        let condition = {}
-        condition[field] = profile
-        const user = await this.findOne(condition)
-        if(!user) {
-            throw new NotFoundException(NOT_FOUND_MSG)
-        }
-
+    async getProfile(requestUserId: string, user: User): Promise<IProfile> {
         return {
             username: user.username,
             bio: user.bio,

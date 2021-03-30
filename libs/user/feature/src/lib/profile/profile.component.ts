@@ -5,6 +5,7 @@ import { IOrder, PaginatedDataSource } from '@realworld/shared/foundation';
 import { IArticle } from '@realworld/article/api-interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IProfile } from '@realworld/user/api-interfaces';
+import { ActionSuccessResponse } from '@realworld/shared/client-server';
 
 @Component({
   selector: 'realworld-profile',
@@ -28,7 +29,7 @@ export class ProfileComponent implements OnInit {
     try {
       const username = this.route.snapshot?.parent?.url[0]?.path.substring(1).toLocaleLowerCase()
       this.profile = (await this.profileService.getProfile(username).toPromise())?.detailData as IProfile
-      this.toggleTab('favoritedArticles', username)
+      // this.toggleTab('favoritedArticles', username)
     } catch(error) {
       this.router.navigateByUrl('/')
       throw error
@@ -67,5 +68,22 @@ export class ProfileComponent implements OnInit {
       await this.articleService.unfavoriteArticle($event.slug).toPromise()
     }
     this.dataSource.fetch()
+  }
+
+  async toggleFollow($event: boolean) {
+    if (!this.userService?.isAuth) {
+      this.router.navigateByUrl('/login')
+      return
+    }
+
+    let promise: Promise<ActionSuccessResponse<IProfile>>
+    if ($event) {
+      promise = this.profileService.followAUser(this.profile?.username).toPromise()
+    } else {
+      promise = this.profileService.unfollowAUser(this.profile?.username).toPromise()
+    }
+
+    const res = await promise
+    this.profile = res.data as IProfile
   }
 }

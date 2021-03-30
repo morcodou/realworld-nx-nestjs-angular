@@ -260,18 +260,20 @@ export class ArticleApiHandlersController {
     }
 
     mapToResponseArticle = async (requestUserId: string, article: Article): Promise<IArticle> => {
+        const user = await this.userService.findOne({id: article?.authorId})
         return {
             ...article,
             favorited: await this.didUserFavoriteThisArticle(requestUserId, article?.slug),
             favoritesCount: await this.getArticleFavoritesCount(article?.slug),
-            author: await this.userService.getProfile(requestUserId, article?.authorId, 'id')
+            author: await this.userService.getProfile(requestUserId, user)
         }
     }
 
     mapToResponseComment = async (requestUserId: string, comment: Comment): Promise<IComment> => {
+        const user = await this.userService.findOne({id: comment?.authorId})
         return {
             ...comment,
-            author: await this.userService.getProfile(requestUserId, comment?.authorId, 'id')
+            author: await this.userService.getProfile(requestUserId, user)
         }
     }
 }

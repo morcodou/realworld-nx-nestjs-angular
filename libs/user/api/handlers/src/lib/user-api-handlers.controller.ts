@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, NotAcceptableException, Param, Post, Put, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotAcceptableException, NotFoundException, Param, Post, Put, Req } from '@nestjs/common';
 import { LOGGED_IN_MSG, REGISTERED_MSG, UPDATED_MSG } from '@realworld/shared/api/constants';
 import { ActionSuccessResponse, DetailSuccessResponse, IResponse } from '@realworld/shared/client-server';
 import { IUpdateUser, IUser, ILoginUser, INewUser, IProfile } from '@realworld/user/api-interfaces';
@@ -51,26 +51,40 @@ export class UserApiHandlersController {
     
     @Get('profiles/:username')
     async getProfile(@Req() req, @Param('username') username: string): Promise<IResponse<IProfile>> {
+        const user = await this.userService.findOne({username: username})
+        if (!user) {
+            throw new NotFoundException()
+        }
         return new DetailSuccessResponse<Partial<IProfile>>({
-            detailData: await this.userService.getProfile(req?.user?.sub, username, 'username')
+            detailData: await this.userService.getProfile(req?.user?.sub, user)
         })
     }
 
     @Post('profiles/:username/follow')
     async followAUser(@Req() req, @Param('username') username: string): Promise<IResponse<IProfile>> {
-        await this.followService.insert({followedId: username, followerId: req?.user?.sub})
+        const user = await this.userService.findOne({username: username})
+        if (!user) {
+            throw new NotFoundException()
+        } 
 
-        return new DetailSuccessResponse<Partial<IProfile>>({
-            detailData: await this.userService.getProfile(req?.user?.sub, username, 'username')
+        await this.followService.insert({followedId: user.id, followerId: req?.user?.sub})
+        return new ActionSuccessResponse<Partial<IProfile>>({
+            message: '',
+            data: await this.userService.getProfile(req?.user?.sub, user)
         })
     }
     
     @Delete('profiles/:username/follow')
     async unfollowAUser(@Req() req, @Param('username') username: string): Promise<IResponse<IProfile>> {
+        const user = await this.userService.findOne({username: username})
+        if (!user) {
+            throw new NotFoundException()
+        } 
         await this.followService.softDelete({followedId: username, followerId: req?.user?.sub})
 
-        return new DetailSuccessResponse<Partial<IProfile>>({
-            detailData: await this.userService.getProfile(req?.user?.sub, username, 'username')
+        return new ActionSuccessResponse<Partial<IProfile>>({
+            message: '',
+            data: await this.userService.getProfile(req?.user?.sub, user)
         })
     }
 }
