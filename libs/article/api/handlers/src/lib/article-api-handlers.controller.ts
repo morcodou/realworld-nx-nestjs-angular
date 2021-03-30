@@ -23,8 +23,6 @@ export class ArticleApiHandlersController {
 
     @Post('articles')
     async create(@Req() req, @Body() data: Partial<INewArticle>): Promise<IResponse<IArticle>> {
-        delete (data as any)?.id 
-
         let article: Partial<Article> = {
             ...data,
             authorId: req?.user?.sub,

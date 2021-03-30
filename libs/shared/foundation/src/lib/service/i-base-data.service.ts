@@ -33,7 +33,7 @@ export abstract class IBaseDataService<T>  {
      * Update a data object
      * @param body Partial<T>
      */
-    abstract update(body: Partial<T> & {id: string}, loading?:boolean): Observable<ActionSuccessResponse<T>>
+    abstract update(id: string, body: Partial<T>, loading?:boolean): Observable<ActionSuccessResponse<T>>
 
     /**
      * Delete a data object based on an identity 

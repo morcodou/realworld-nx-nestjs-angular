@@ -24,14 +24,16 @@ export class EditorComponent implements OnInit {
     this.initForm()
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     const slug = this.route.snapshot.params['slug']
     if (slug) {
       if (history?.state?.data) {
         this.form.patchValue(this.processArticleResponse(history.state.data))
       } else {
-        this.loadArticle(slug)
+        await this.loadArticle(slug)
       }
+
+      this.form.get('tagList').disable()
     }
   }
 
@@ -51,7 +53,7 @@ export class EditorComponent implements OnInit {
 
   private initForm() {
     this.form = this.fb.group({
-      id: [null],
+      slug: [null],
       title: [null, [Validators.required, Validators.maxLength(200)]],
       description: [null, [Validators.required, Validators.maxLength(255)]],
       body: [null, [Validators.required, Validators.maxLength(2000)]],
@@ -63,8 +65,8 @@ export class EditorComponent implements OnInit {
     const data = this.processFormValue(this.form.value)
 
     let promise: Promise<ActionSuccessResponse<IArticle>>
-    if (data.id) {
-      promise = this.articleService.update(data as any).toPromise()
+    if (data.slug) {
+      promise = this.articleService.update(this.form?.value?.slug, data as any).toPromise()
     } else {
       promise = this.articleService.create(data).toPromise()
     }
@@ -74,15 +76,19 @@ export class EditorComponent implements OnInit {
   }
 
   private processArticleResponse(article: IArticle): any {
-    article.tagList = article.tagList.join(', ') as any
+    if (article.tagList) {
+      article.tagList = article.tagList.join(', ') as any
+    }
     return article
   }
 
   private processFormValue(f): IArticle {
     let article = {...f}
-    article.tagList = (article.tagList as string).split(',').map(t => t.trim())
-    if (!article.id) {
-      delete article.id
+    if (article.tagList) {
+      article.tagList = (article.tagList as string).split(',').map(t => t.trim())
+    }
+    if (!article.slug) {
+      delete article.slug
     }
     return article
   }

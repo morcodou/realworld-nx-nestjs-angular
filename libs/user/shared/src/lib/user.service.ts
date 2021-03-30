@@ -58,7 +58,7 @@ export class UserService extends BaseDataService<IUser> implements IUserService 
             }))
     }
 
-    update(body: Partial<IUser> & {id: string}, loading = true): Observable<ActionSuccessResponse<IUser>> {
+    update(id: string, body: Partial<IUser> & {id: string}, loading = true): Observable<ActionSuccessResponse<IUser>> {
         let url = this.getURL()
         this.setLoading(loading ? 'show' : 'not-show')
         let options = {...this.defaultOptions}

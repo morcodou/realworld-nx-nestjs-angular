@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedCommonModule } from '@realworld/shared/common';
 import { ArticleAuthorModule } from '../components/article-author/article-author.module';
+import { MarkdownPipe } from './markdown.pipe';
 import { ViewArticleComponent } from './view-article.component';
 
 @NgModule({
@@ -15,6 +16,6 @@ import { ViewArticleComponent } from './view-article.component';
       }
     ])
   ],
-  declarations: [ViewArticleComponent]
+  declarations: [ViewArticleComponent, MarkdownPipe]
 })
 export class ViewArticleModule {}

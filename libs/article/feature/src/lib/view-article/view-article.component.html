@@ -15,8 +15,8 @@
     <div class="container page">
         <div class="row article-content">
             <div class="col-md-12">
-                <p>{{article?.description}}</p>
-                <div>{{article?.body}}</div>
+                <div>{{article?.description}}</div>
+                <div *ngIf="article?.body" [innerHTML]="article.body | markdown"></div>
                 <ul class="tag-list pull-xs-right">
                     <li 
                         *ngFor="let t of article?.tagList"

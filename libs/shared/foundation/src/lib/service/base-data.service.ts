@@ -39,8 +39,8 @@ export abstract class BaseDataService<T> extends BaseService implements IBaseDat
         return this.http.post<ActionSuccessResponse<T>>(url, body, options)
     }
 
-    update(body: Partial<T> & {id: string}, loading = true): Observable<ActionSuccessResponse<T>> {
-        let url = this.getURL()
+    update(id: string, body: Partial<T>, loading = true): Observable<ActionSuccessResponse<T>> {
+        let url = this.getURL(id)
         this.setLoading(loading ? 'show' : 'not-show')
         let options = {...this.defaultOptions}
         return this.http.put<ActionSuccessResponse<T>>(url, body, options)
