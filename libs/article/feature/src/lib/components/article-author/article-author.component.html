@@ -4,7 +4,7 @@
 
     <div class="info">
         <a [routerLink]="'/@'+article?.author?.username" class="author">{{article?.author?.username}}</a>
-        <span class="date">{{article?.author?.createdAt | date}}</span>
+        <span class="date">{{article?.createdAt | date}}</span>
     </div>
 
     <ng-container *ngIf="currentUser?.username !== article?.author?.username; else editDelete">
