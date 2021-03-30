@@ -2,7 +2,6 @@
     <realworld-article-item 
         *ngFor="let item of articles"
         [article]="item"
-        [displayTags]="displayTags"
         (toggleFavorite)="toggleFavorite.emit($event)"
         ></realworld-article-item>
     <div class="row">

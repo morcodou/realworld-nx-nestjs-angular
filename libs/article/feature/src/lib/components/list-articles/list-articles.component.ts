@@ -10,8 +10,6 @@ import { IArticle } from '@realworld/article/api-interfaces';
 export class ListArticlesComponent implements OnInit {
   @Input()
   articles: IArticle[]
-  @Input()
-  displayTags: boolean
   @Input() 
   pageSize: number
   @Input() 
