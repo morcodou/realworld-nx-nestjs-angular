@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedCommonModule } from '@realworld/shared/common';
-import { ListArticlesModule } from '../list-articles/list-articles.module';
+import { ListArticlesModule } from '../components/list-articles/list-articles.module';
 import { HomeComponent } from './home.component';
 
 @NgModule({

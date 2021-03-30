@@ -12,7 +12,7 @@ export class ArticleItemComponent implements OnInit {
   @Input()
   displayTags: boolean
 
-  @Output() toggleFavorite = new EventEmitter<boolean>()
+  @Output() toggleFavorite = new EventEmitter<{favorite: boolean, slug: string}>()
 
   constructor() { 
   }

@@ -141,7 +141,7 @@ export class ArticleApiHandlersController {
 
     @Post('articles/:slug/favorite')
     async favoriteAnArticle(@Req() req, @Param('slug') slug): Promise<IResponse<IArticle>> {
-        const isFavorited = !!this.favoriteService.findOne({userId: req?.user?.sub, articleSlug: slug})
+        const isFavorited = !! (await this.favoriteService.findOne({userId: req?.user?.sub, articleSlug: slug}))
         if (!isFavorited) {
             await this.favoriteService.insert({userId: req?.user?.sub, articleSlug: slug})
         }
@@ -154,7 +154,7 @@ export class ArticleApiHandlersController {
     
     @Delete('articles/:slug/favorite')
     async unfavoriteAnArticle(@Req() req, @Param('slug') slug): Promise<IResponse<IArticle>> {
-        const isFavorited = !!this.favoriteService.findOne({userId: req?.user?.sub, articleSlug: slug})
+        const isFavorited = !!(await this.favoriteService.findOne({userId: req?.user?.sub, articleSlug: slug}))
         if (isFavorited) {
             await this.favoriteService.softDelete({userId: req?.user?.sub, articleSlug: slug})
         }
@@ -242,7 +242,7 @@ export class ArticleApiHandlersController {
     mapToResponseArticle = async (requestUserId: string, article: Article): Promise<IArticle> => {
         return {
             ...article,
-            favorited: requestUserId ? await this.didUserFavoriteThisArticle(requestUserId, article?.slug) : false,
+            favorited: await this.didUserFavoriteThisArticle(requestUserId, article?.slug),
             favoritesCount: await this.getArticleFavoritesCount(article?.slug),
             author: await this.userService.getProfile(requestUserId, article?.authorId, 'id')
         }

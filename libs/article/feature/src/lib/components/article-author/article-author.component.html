@@ -1,0 +1,31 @@
+<div class="article-meta">
+    <a *ngIf="article?.author?.image" [routerLink]="'/@'+article?.author?.username"><img
+            [src]="article?.author?.image" /></a>
+
+    <div class="info">
+        <a [routerLink]="'/@'+article?.author?.username" class="author">{{article?.author?.username}}</a>
+        <span class="date">{{article?.author?.createdAt | date}}</span>
+    </div>
+
+    <button 
+        class="btn btn-sm"
+        [class.btn-success]="article?.author?.following"
+        [class.btn-outline-primary]="!article?.author?.following"
+        (click)="toggleFollow.emit(!article?.author?.following)"
+        >
+        <i class="ion-plus-round"></i>
+        &nbsp;
+        {{article?.author?.following ? 'Unfollow' : 'Follow'}} {{article?.author?.username}}
+    </button>
+    &nbsp;&nbsp;
+    <button 
+        class="btn btn-sm"
+        [class.btn-success]="article?.favorited"
+        [class.btn-outline-primary]="!article?.favorited"
+        (click)="toggleFavorite.emit(!article?.favorited)"
+        >
+        <i class="ion-heart"></i>
+        &nbsp;
+        {{article?.favorited ? 'Unfavorite' : 'Favorite'}} Post <span class="counter">({{article?.favoritesCount || 0}})</span>
+    </button>
+</div>

@@ -14,6 +14,8 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
             context.getHandler(),
             context.getClass(),
         ]);
-        return skipAuth || super.canActivate(context)
+        const res = super.canActivate(context)
+        
+        return skipAuth || res
     }
 }

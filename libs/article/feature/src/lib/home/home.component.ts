@@ -67,4 +67,12 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  async toggleFavorite($event: {favorite: boolean, slug: string}) {
+    if ($event.favorite) {
+      await this.articleService.favoriteArticle($event.slug).toPromise()
+    } else {
+      await this.articleService.unfavoriteArticle($event.slug).toPromise()
+    }
+    this.dataSource.fetch()
+  }
 }

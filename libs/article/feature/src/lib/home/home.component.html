@@ -43,6 +43,7 @@
                         [collectionSize]="page?.total" 
                         [page]="page?.pageIndex+1" 
                         (pageChange)="dataSource.fetch($event-1)"
+                        (toggleFavorite)="toggleFavorite($event)"
                         ></realworld-list-articles>
                 </ng-container>
             </div>

@@ -23,6 +23,8 @@ export class ListArticlesComponent implements OnInit {
   @Output() 
   pageChange = new EventEmitter<number>()
 
+  @Output() toggleFavorite = new EventEmitter<{favorite: boolean, slug: string}>()
+
   constructor() { }
 
   ngOnInit(): void {

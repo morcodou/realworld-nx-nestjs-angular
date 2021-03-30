@@ -9,11 +9,12 @@
             class="btn btn-sm pull-xs-right"
             [class.btn-outline-primary]="!article?.favorited"
             [class.btn-danger]="article?.favorited"
+            (click)="toggleFavorite.emit({favorite: !article?.favorited, slug: article?.slug})"
             >
             <i class="ion-heart"></i> {{article?.favoritesCount || 0}}
         </button>
     </div>
-    <a [routerLink]="['/article', article?.slug]" [state]="article" class="preview-link">
+    <a [routerLink]="['/article', article?.slug]" [state]="{data: article}" class="preview-link">
         <h1>{{article?.title}}</h1>
         <p>{{article?.description}}</p>
         <span>Read more...</span>

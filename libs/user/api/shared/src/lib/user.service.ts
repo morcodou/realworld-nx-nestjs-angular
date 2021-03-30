@@ -86,7 +86,8 @@ export class UserService extends BaseService<User> {
             following: !requestUserId ? false : !!(await this.followService.findOne({
                 followerId: requestUserId, 
                 followedId: user.id
-            }))
+            })),
+            createdAt: user.createdAt
         }   
     }
 
