@@ -38,6 +38,7 @@
                 <ng-container *ngIf="dataSource?.page$ | async as page">
                     <realworld-list-articles
                         [articles]="page?.data"
+                        [displayTags]="feedType==='tag'"
                         [pageSize]="page?.limit"
                         [collectionSize]="page?.total" 
                         [page]="page?.pageIndex+1" 

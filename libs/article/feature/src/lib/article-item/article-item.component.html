@@ -18,4 +18,11 @@
         <p>{{article?.description}}</p>
         <span>Read more...</span>
     </a>
+
+    <ul class="tag-list pull-xs-right" *ngIf="displayTags">
+        <li 
+            *ngFor="let t of article?.tagList"
+            class="tag-default tag-pill tag-outline"
+            >{{t}} </li>
+    </ul>
 </div>

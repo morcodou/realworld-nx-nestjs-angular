@@ -9,6 +9,8 @@ import { IArticle } from '@realworld/article/api-interfaces';
 })
 export class ArticleItemComponent implements OnInit {
   @Input() article: IArticle
+  @Input()
+  displayTags: boolean
 
   @Output() toggleFavorite = new EventEmitter<boolean>()
 
