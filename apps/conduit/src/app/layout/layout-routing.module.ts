@@ -1,6 +1,11 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, UrlSegment } from '@angular/router';
 import { LayoutComponent } from './layout.component';
+
+export function profilePathMatcher(url: UrlSegment[]) {
+  console.log('profilePathMatcher', url)
+  return url.length >= 1 && url[0].path.startsWith('@') ? ({consumed: url}) : null;
+}
 
 const routes: Routes = [
   {
@@ -11,6 +16,11 @@ const routes: Routes = [
         path: '', 
         loadChildren: () => import('@realworld/article/feature')
           .then(m => m.HomeModule)
+      },
+      { 
+        matcher: profilePathMatcher,
+        loadChildren: () => import('@realworld/user/feature')
+          .then(m => m.ProfileModule),
       },
       { 
         path: 'editor', 
