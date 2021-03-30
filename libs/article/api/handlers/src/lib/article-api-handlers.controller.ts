@@ -99,7 +99,7 @@ export class ArticleApiHandlersController {
             const user = await this.userService.findOne({username: author})
             if (user) {query.authorId = user.id} 
         }
-        if (tag) { query.tag = Like(`%${tag}%`) }
+        if (tag) { query.tagList = Like(`%${tag}%`) }
 
         const options = mapQueriesToFindManyOptions<Article>(query, 'title', 'slug', 'shortDescription', 'body')
 
