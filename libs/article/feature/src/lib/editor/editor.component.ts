@@ -5,6 +5,7 @@ import { IArticle } from '@realworld/article/api-interfaces';
 import { IArticleService } from '@realworld/article/shared';
 import { ActionSuccessResponse } from '@realworld/shared/client-server';
 import { IUserService } from '@realworld/user/shared';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'realworld-editor',
@@ -39,7 +40,7 @@ export class EditorComponent implements OnInit {
 
   async loadArticle(slug: string) {
     try {
-      let res = await this.articleService.getOne(slug).toPromise()
+      let res = await this.articleService.getOne(slug).pipe(take(1)).toPromise()
       if (res && res.detailData) {
         this.form.patchValue(this.processArticleResponse(res.detailData as IArticle))
       } else {
@@ -66,9 +67,9 @@ export class EditorComponent implements OnInit {
 
     let promise: Promise<ActionSuccessResponse<IArticle>>
     if (data.slug) {
-      promise = this.articleService.update(this.form?.value?.slug, data as any).toPromise()
+      promise = this.articleService.update(this.form?.value?.slug, data as any).pipe(take(1)).toPromise()
     } else {
-      promise = this.articleService.create(data).toPromise()
+      promise = this.articleService.create(data).pipe(take(1)).toPromise()
     }
 
     const res = await promise

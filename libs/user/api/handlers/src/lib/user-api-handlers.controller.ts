@@ -80,7 +80,7 @@ export class UserApiHandlersController {
         if (!user) {
             throw new NotFoundException()
         } 
-        await this.followService.softDelete({followedId: username, followerId: req?.user?.sub})
+        await this.followService.softDelete({followedId: user.id, followerId: req?.user?.sub})
 
         return new ActionSuccessResponse<Partial<IProfile>>({
             message: '',

@@ -4,7 +4,7 @@ import { IArticleQuery, IArticleService, ITagService } from '@realworld/article/
 import { IOrder, PaginatedDataSource } from '@realworld/shared/foundation';
 import { IArticle } from '@realworld/article/api-interfaces';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 @Component({
   selector: 'realworld-home',
@@ -74,9 +74,9 @@ export class HomeComponent implements OnInit {
 
   async toggleFavorite($event: {favorite: boolean, slug: string}) {
     if ($event.favorite) {
-      await this.articleService.favoriteArticle($event.slug).toPromise()
+      await this.articleService.favoriteArticle($event.slug).pipe(take(1)).toPromise()
     } else {
-      await this.articleService.unfavoriteArticle($event.slug).toPromise()
+      await this.articleService.unfavoriteArticle($event.slug).pipe(take(1)).toPromise()
     }
     this.dataSource.fetch()
   }

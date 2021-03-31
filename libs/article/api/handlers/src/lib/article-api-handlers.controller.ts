@@ -126,7 +126,7 @@ export class ArticleApiHandlersController {
             const user = await this.userService.findOne({username: favorited});
             if (user) {
                const [res, count] = await this.articleService.repository.createQueryBuilder('article')
-                .innerJoin("favorite", "favorite", "article.slug = favorite.articleSlug")
+                .innerJoinAndSelect("favorite", "favorite", "article.slug = favorite.articleSlug")
                 .where(options?.where)
                 .andWhere('favorite.userid = :userId', {userId: user.id})
                 .take(options?.take)

@@ -4,6 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { IUserService } from '@realworld/user/shared';
 import { CustomValidators } from 'ngx-custom-validators';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'register',
@@ -43,7 +44,7 @@ export class RegisterComponent {
   }
 
   async submit() {
-    await this.userService.register(this.form.value).toPromise()
+    await this.userService.register(this.form.value).pipe(take(1)).toPromise()
     this.router.navigate(['/'])
   }
 

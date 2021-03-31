@@ -4,7 +4,7 @@
         [article]="item"
         (toggleFavorite)="toggleFavorite.emit($event)"
         ></realworld-article-item>
-    <div class="row">
+    <div class="row" *ngIf="collectionSize > pageSize">
         <div class="col-12">
           <ngb-pagination 
             [pageSize]="pageSize"

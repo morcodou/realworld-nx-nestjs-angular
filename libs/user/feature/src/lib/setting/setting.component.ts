@@ -42,7 +42,7 @@ export class SettingComponent implements OnInit {
   }
 
   async update() {
-    await this.userService.update(null, this.form.value).toPromise()
+    await this.userService.update(null, this.form.value).pipe(take(1)).toPromise()
   }
 
 }

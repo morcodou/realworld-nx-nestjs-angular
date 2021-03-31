@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { IProfileService, IUserService } from '@realworld/user/shared';
-import { IArticleQuery, IArticleService, ITagService } from '@realworld/article/shared';
-import { IOrder, PaginatedDataSource } from '@realworld/shared/foundation';
-import { IArticle } from '@realworld/article/api-interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IProfile } from '@realworld/user/api-interfaces';
+import { IArticle } from '@realworld/article/api-interfaces';
+import { IArticleQuery, IArticleService } from '@realworld/article/shared';
 import { ActionSuccessResponse } from '@realworld/shared/client-server';
+import { IOrder, PaginatedDataSource } from '@realworld/shared/foundation';
+import { IProfile } from '@realworld/user/api-interfaces';
+import { IProfileService, IUserService } from '@realworld/user/shared';
+import { Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'realworld-profile',
@@ -16,6 +18,7 @@ export class ProfileComponent implements OnInit {
   dataSource: PaginatedDataSource<IArticle>
   tabType: 'myArticles'|'favoritedArticles'
   profile: IProfile
+  private destroyed = new Subject()
 
   constructor(
     public userService: IUserService,
@@ -26,14 +29,26 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    try {
-      const username = this.route.snapshot?.parent?.url[0]?.path.substring(1).toLocaleLowerCase()
-      this.profile = (await this.profileService.getProfile(username).toPromise())?.detailData as IProfile
-      // this.toggleTab('favoritedArticles', username)
-    } catch(error) {
-      this.router.navigateByUrl('/')
-      throw error
-    }
+    this.route.parent.url.pipe(takeUntil(this.destroyed)).subscribe(async pUrl => {
+      try {
+        const username = pUrl[0]?.path.substring(1).toLocaleLowerCase()
+        this.profile = (await this.profileService.getProfile(username).pipe(take(1)).toPromise())?.detailData as IProfile
+        if (pUrl.length > 1) {
+          this.toggleTab('favoritedArticles', username)
+        } else {
+          this.toggleTab('myArticles', username)
+        }
+      } catch(error) {
+        this.router.navigateByUrl('/')
+        throw error
+      }
+    })
+    
+  }
+
+  ngOnDestroy() {
+    this.destroyed.next()
+    this.destroyed.complete()
   }
 
   toggleTab(tabType: 'myArticles'|'favoritedArticles', username: string) {
@@ -63,9 +78,9 @@ export class ProfileComponent implements OnInit {
 
   async toggleFavorite($event: {favorite: boolean, slug: string}) {
     if ($event.favorite) {
-      await this.articleService.favoriteArticle($event.slug).toPromise()
+      await this.articleService.favoriteArticle($event.slug).pipe(take(1)).toPromise()
     } else {
-      await this.articleService.unfavoriteArticle($event.slug).toPromise()
+      await this.articleService.unfavoriteArticle($event.slug).pipe(take(1)).toPromise()
     }
     this.dataSource.fetch()
   }
@@ -78,9 +93,9 @@ export class ProfileComponent implements OnInit {
 
     let promise: Promise<ActionSuccessResponse<IProfile>>
     if ($event) {
-      promise = this.profileService.followAUser(this.profile?.username).toPromise()
+      promise = this.profileService.followAUser(this.profile?.username).pipe(take(1)).toPromise()
     } else {
-      promise = this.profileService.unfollowAUser(this.profile?.username).toPromise()
+      promise = this.profileService.unfollowAUser(this.profile?.username).pipe(take(1)).toPromise()
     }
 
     const res = await promise

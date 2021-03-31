@@ -7,7 +7,7 @@ import { ActionSuccessResponse } from '@realworld/shared/client-server';
 import { IProfile } from '@realworld/user/api-interfaces';
 import { IProfileService, IUserService } from '@realworld/user/shared';
 import { Subject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { take, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'realworld-view-article',
@@ -59,7 +59,7 @@ export class ViewArticleComponent implements OnInit {
 
   async loadArticle(slug: string) {
     try {
-      let res = await this.articleService.getOne(slug).toPromise()
+      let res = await this.articleService.getOne(slug).pipe(take(1)).toPromise()
       if (res && res.detailData) {
         this.article = res.detailData as IArticle
       } else {
@@ -72,18 +72,18 @@ export class ViewArticleComponent implements OnInit {
   }
 
   async loadComments() {
-    const res = await this.commentService.getAllComments(this.article?.slug).toPromise()
+    const res = await this.commentService.getAllComments(this.article?.slug).pipe(take(1)).pipe(take(1)).toPromise()
     this.comments = res.data || []
   }
 
   async postComment() {
-    const res = await this.commentService.postComment(this.article?.slug, this.commentForm.value).toPromise()
+    const res = await this.commentService.postComment(this.article?.slug, this.commentForm.value).pipe(take(1)).toPromise()
     this.comments.unshift(res.data as IComment)
     this.commentForm.reset()
   }
   
   async deleteComment(id: string) {
-    await this.commentService.deleteComments(this.article?.slug, id).toPromise()
+    await this.commentService.deleteComments(this.article?.slug, id).pipe(take(1)).toPromise()
     this.comments = this.comments.filter(c => c.id !== id)
   }
 
@@ -94,9 +94,9 @@ export class ViewArticleComponent implements OnInit {
     }
     let promise: Promise<ActionSuccessResponse<IArticle>>
     if ($event) {
-      promise = this.articleService.favoriteArticle(this.article?.slug).toPromise()
+      promise = this.articleService.favoriteArticle(this.article?.slug).pipe(take(1)).toPromise()
     } else {
-      promise = this.articleService.unfavoriteArticle(this.article?.slug).toPromise()
+      promise = this.articleService.unfavoriteArticle(this.article?.slug).pipe(take(1)).toPromise()
     }
 
     const res = await promise
@@ -111,17 +111,22 @@ export class ViewArticleComponent implements OnInit {
 
     let promise: Promise<ActionSuccessResponse<IProfile>>
     if ($event) {
-      promise = this.profileService.followAUser(this.article?.author?.username).toPromise()
+      promise = this.profileService.followAUser(this.article?.author?.username).pipe(take(1)).toPromise()
     } else {
-      promise = this.profileService.unfollowAUser(this.article?.author?.username).toPromise()
+      promise = this.profileService.unfollowAUser(this.article?.author?.username).pipe(take(1)).toPromise()
     }
 
     const res = await promise
-    this.article.author = res.data as IProfile
+    this.article = {
+      ...this.article,
+      author: {
+        ...res.data as IProfile
+      }
+    } 
   }
 
   async delete() {
-    await this.articleService.delete(this.article?.slug).toPromise()
+    await this.articleService.delete(this.article?.slug).pipe(take(1)).toPromise()
     this.router.navigateByUrl('/')
   }
 
