@@ -182,13 +182,15 @@ export class ArticleApiHandlersController {
 
     // Comment apis
 
+    @SkipAuth()
     @Get('articles/:slug/comments')
     async findAllComments(@Req() req, @Param('slug') slug: string): Promise<IResponse<IComment>> {
         const options = mapQueriesToFindManyOptions<Comment>({articleSlug: slug})
         let res = await this.commentService.findAll(options)
 
+        const jwtInfo = this.userService.getJwtInfo(req)
         return new ListSuccessResponse<IComment>({
-            listData: await Promise.all(res.map(c => this.mapToResponseComment(req?.user?.sub, c))),
+            listData: await Promise.all(res.map(c => this.mapToResponseComment(jwtInfo?.sub, c))),
             total: await this.commentService.count(options)
         })
     }

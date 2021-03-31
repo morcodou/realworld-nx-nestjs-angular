@@ -47,9 +47,7 @@ export class ViewArticleComponent implements OnInit {
             this.title.setTitle('Realworld - Article ' + this.article?.title)
           }
 
-          if (this.userService.isAuth) {
-            this.loadComments()
-          }
+          this.loadComments()
         })
       )
       .subscribe()
