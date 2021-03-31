@@ -5,7 +5,9 @@ import { SKIP_AUTH_KEY } from '../skip-auth';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
-    constructor(private reflector: Reflector) {
+    constructor(
+        private reflector: Reflector
+    ) {
         super();
     }
 
@@ -14,8 +16,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
             context.getHandler(),
             context.getClass(),
         ]);
-        const res = super.canActivate(context)
-        
-        return skipAuth || res
+    
+        return skipAuth || super.canActivate(context)
     }
 }

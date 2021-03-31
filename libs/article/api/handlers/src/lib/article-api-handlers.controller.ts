@@ -1,12 +1,12 @@
 import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, Query, Req, UnauthorizedException } from '@nestjs/common';
 import { IArticle, IComment, INewArticle, INewComment, IUpdateArticle } from '@realworld/article/api-interfaces';
-import { Article, ArticleService, Favorite, FavoriteService, TagService, Comment, CommentService } from '@realworld/article/api/shared';
+import { Article, ArticleService, Comment, CommentService, Favorite, FavoriteService, TagService } from '@realworld/article/api/shared';
 import { CREATED_MSG, DELETED_MSG, NOT_FOUND_MSG, UPDATED_MSG } from '@realworld/shared/api/constants';
 import { mapQueriesToFindManyOptions } from '@realworld/shared/api/foundation';
 import { ActionSuccessResponse, DetailSuccessResponse, IResponse, ListSuccessResponse } from '@realworld/shared/client-server';
 import { StringUtil } from '@realworld/shared/string-util';
 import { Follow, FollowService, SkipAuth, UserService } from '@realworld/user/api/shared';
-import { In, Like, QueryBuilder } from 'typeorm';
+import { In, Like } from 'typeorm';
 
 @Controller()
 export class ArticleApiHandlersController {
@@ -101,8 +101,10 @@ export class ArticleApiHandlersController {
             throw new NotFoundException(NOT_FOUND_MSG)
         }
 
+        const jwtInfo = this.userService.getJwtInfo(req)
+
         return new DetailSuccessResponse<IArticle>({
-            detailData: await this.mapToResponseArticle(req?.user?.sub, article)
+            detailData: await this.mapToResponseArticle(jwtInfo?.sub, article)
         })
     }
 
@@ -113,6 +115,8 @@ export class ArticleApiHandlersController {
         delete query.author
         delete query.tag
         delete query.favorited
+
+        const jwtInfo = this.userService.getJwtInfo(req)
 
         if (author) {
             const user = await this.userService.findOne({username: author})
@@ -135,7 +139,7 @@ export class ArticleApiHandlersController {
                 .getManyAndCount()
 
                 return new ListSuccessResponse<IArticle>({
-                    listData: await Promise.all(res.map(a => this.mapToResponseArticle(req?.user?.sub, a))),
+                    listData: await Promise.all(res.map(a => this.mapToResponseArticle(jwtInfo?.sub, a))),
                     total: count
                 })
             }
@@ -143,7 +147,7 @@ export class ArticleApiHandlersController {
         
         const res = await this.articleService.findAll(options)
         return new ListSuccessResponse<IArticle>({
-            listData: await Promise.all(res.map(a => this.mapToResponseArticle(req?.user?.sub, a))),
+            listData: await Promise.all(res.map(a => this.mapToResponseArticle(jwtInfo?.sub, a))),
             total: await this.articleService.count(options)
         })
     }

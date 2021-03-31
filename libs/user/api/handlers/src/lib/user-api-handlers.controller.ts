@@ -56,8 +56,9 @@ export class UserApiHandlersController {
         if (!user) {
             throw new NotFoundException()
         }
+        const jwtInfo = this.userService.getJwtInfo(req)
         return new DetailSuccessResponse<Partial<IProfile>>({
-            detailData: await this.userService.getProfile(req?.user?.sub, user)
+            detailData: await this.userService.getProfile(jwtInfo?.sub, user)
         })
     }
 

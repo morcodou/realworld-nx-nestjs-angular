@@ -114,4 +114,15 @@ export class UserService extends BaseService<User> {
     }): Promise<string> {
         return this.jwtService.sign(data)
     }
+
+    getJwtInfo(req): {sub: string, email: string, username: string, iat: number, exp: number}|null {
+        if (!req?.headers?.authorization) {
+            return null
+        }
+        const authArr: string[] = req?.headers?.authorization.split(' ')
+        if (authArr.length !== 2) {
+            return null
+        }
+        return this.jwtService.decode(authArr[1]) as any
+    }
 }
