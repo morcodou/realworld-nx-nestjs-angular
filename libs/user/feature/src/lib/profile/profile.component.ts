@@ -80,6 +80,11 @@ export class ProfileComponent implements OnInit {
   }
 
   async toggleFavorite($event: {favorite: boolean, slug: string}) {
+    if (!this.userService?.isAuth) {
+      this.router.navigateByUrl('/login')
+      return
+    }
+    
     if ($event.favorite) {
       await this.articleService.favoriteArticle($event.slug).pipe(take(1)).toPromise()
     } else {

@@ -6,6 +6,7 @@ import { IOrder, PaginatedDataSource } from '@realworld/shared/foundation';
 import { IArticle } from '@realworld/article/api-interfaces';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'realworld-home',
@@ -22,7 +23,8 @@ export class HomeComponent implements OnInit {
     public userService: IUserService,
     private articleService: IArticleService,
     private tagService: ITagService,
-    private title: Title
+    private title: Title,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -76,6 +78,11 @@ export class HomeComponent implements OnInit {
   }
 
   async toggleFavorite($event: {favorite: boolean, slug: string}) {
+    if (!this.userService?.isAuth) {
+      this.router.navigateByUrl('/login')
+      return
+    }
+
     if ($event.favorite) {
       await this.articleService.favoriteArticle($event.slug).pipe(take(1)).toPromise()
     } else {

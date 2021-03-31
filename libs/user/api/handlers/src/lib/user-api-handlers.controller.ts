@@ -49,6 +49,7 @@ export class UserApiHandlersController {
         })
     }
     
+    @SkipAuth()
     @Get('profiles/:username')
     async getProfile(@Req() req, @Param('username') username: string): Promise<IResponse<IProfile>> {
         const user = await this.userService.findOne({username: username})
