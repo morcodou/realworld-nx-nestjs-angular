@@ -3,21 +3,37 @@
 > ### [Nx monorepo](https://nx.dev) with [Nestjs](https://nestjs.com) and [Angular](https://angular.io) codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.
 
 
-### [Demo](https://github.com/gothinkster/realworld)&nbsp;&nbsp;&nbsp;&nbsp;[RealWorld](https://github.com/gothinkster/realworld)
-
-
 This codebase was created to demonstrate a fully fledged fullstack application built with **[Nx monorepo](https://nx.dev), [Nestjs](https://nestjs.com) and [Angular](https://angular.io)** including CRUD operations, authentication, routing, pagination, and more.
-
-We've gone to great lengths to adhere to the **[Nx](https://nx.dev), [Nestjs](https://nestjs.com) and [Angular](https://angular.io)** community styleguides & best practices.
-
-For more information on how to this works with other frontends/backends, head over to the [RealWorld](https://github.com/gothinkster/realworld) repo.
-
-
-# How it works
-
-> Describe the general architecture of your app here
 
 # Getting started
 
-> npm install, npm start, etc.
+*Prerequisites: To run this project locally, you need to have [Nodejs](https://nodejs.org/) and [MySQL](https://www.mysql.com/) installed on your operating system, remember to start your MySQl server also.*
+
+**Clone this project**
+
+`git clone https://github.com/nhaancs/fullstack-nx-nestjs-angular-realworld.git`
+
+**Switch to the repo folder**
+
+`cd fullstack-nx-nestjs-angular-realworld`
+
+**Install dependencies**
+
+`npm install`
+
+**Update below configs in `ormconfig.js` file to your database configs**
+
+`host`, `port`, `username`, `password`, `database`
+
+**Run migrations**
+
+`npm run migration:run`
+
+**Start both server (api) and client (conduit) apps**
+
+`npm run serve:api-conduit`
+
+**Open browser at [http://localhost:4200](http://localhost:4200)**
+
+# How it works
 
