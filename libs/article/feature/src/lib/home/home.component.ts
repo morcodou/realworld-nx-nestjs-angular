@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { IUserService } from '@realworld/user/shared';
 import { IArticleQuery, IArticleService, ITagService } from '@realworld/article/shared';
 import { IOrder, PaginatedDataSource } from '@realworld/shared/foundation';
@@ -20,10 +21,12 @@ export class HomeComponent implements OnInit {
   constructor(
     public userService: IUserService,
     private articleService: IArticleService,
-    private tagService: ITagService
+    private tagService: ITagService,
+    private title: Title
   ) {}
 
   ngOnInit() {
+    this.title.setTitle('Realworld - Home')
     if (this.userService?.isAuth) {
       this.toggleFeed('personal')
     } else {

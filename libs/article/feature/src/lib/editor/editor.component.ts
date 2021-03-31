@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IArticle } from '@realworld/article/api-interfaces';
@@ -20,12 +21,14 @@ export class EditorComponent implements OnInit {
     private articleService: IArticleService,
     private router: Router, 
     private route: ActivatedRoute, 
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private title: Title
   ) {
     this.initForm()
   }
 
   async ngOnInit() {
+    this.title.setTitle('Realworld - New article')
     const slug = this.route.snapshot.params['slug']
     if (slug) {
       if (history?.state?.data) {
@@ -33,6 +36,7 @@ export class EditorComponent implements OnInit {
       } else {
         await this.loadArticle(slug)
       }
+      this.title.setTitle('Realworld - Edit article ' + this.form?.get('title')?.value)
 
       this.form.get('tagList').disable()
     }

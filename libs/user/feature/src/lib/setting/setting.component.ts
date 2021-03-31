@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IUserService } from '@realworld/user/shared';
@@ -16,12 +17,14 @@ export class SettingComponent implements OnInit {
   constructor(
     private userService: IUserService, 
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private title: Title
   ) { 
     this.initForm()
   }
 
   async ngOnInit() {
+    this.title.setTitle('Realworld - View Settings')
     const user = (await this.userService.getCurrentUser().pipe(take(1)).toPromise())?.detailData
     this.form.patchValue(user)
   }

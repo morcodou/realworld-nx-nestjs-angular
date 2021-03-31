@@ -15,10 +15,7 @@ export class AuthGuardService implements CanActivate {
   ): boolean {
     const isAuth = this.userService.isAuth
     if (!isAuth) {
-      this.router.navigate(
-        ['login'],
-        { queryParams: { returnUrl: state.url } }
-      )
+      this.router.navigate(['login'])
     }
 
     return isAuth

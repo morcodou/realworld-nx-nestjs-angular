@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IArticle } from '@realworld/article/api-interfaces';
 import { IArticleQuery, IArticleService } from '@realworld/article/shared';
@@ -25,7 +26,8 @@ export class ProfileComponent implements OnInit {
     private articleService: IArticleService,
     private profileService: IProfileService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private title: Title
   ) {}
 
   async ngOnInit() {
@@ -33,6 +35,7 @@ export class ProfileComponent implements OnInit {
       try {
         const username = pUrl[0]?.path.substring(1).toLocaleLowerCase()
         this.profile = (await this.profileService.getProfile(username).pipe(take(1)).toPromise())?.detailData as IProfile
+        this.title.setTitle('Realworld - Profile '+ this.profile?.username)
         if (pUrl.length > 1) {
           this.toggleTab('favoritedArticles', username)
         } else {

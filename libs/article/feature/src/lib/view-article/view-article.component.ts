@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IArticle, IComment } from '@realworld/article/api-interfaces';
@@ -27,7 +28,8 @@ export class ViewArticleComponent implements OnInit {
     private commentService: ICommentService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private title: Title
   ) { 
     this.initCommentForm()
   }
@@ -42,6 +44,7 @@ export class ViewArticleComponent implements OnInit {
           } else {
             let slug = p['slug']
             await this.loadArticle(slug)
+            this.title.setTitle('Realworld - Article ' + this.article?.title)
           }
 
           if (this.userService.isAuth) {
