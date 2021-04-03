@@ -1,19 +1,20 @@
 # ![RealWorld Example App](logo.png)
 
 # Todo
+Easy 
 - [ ] Use hidden column for password, deletedAt instead of strip out in code (https://typeorm.io/#/select-query-builder/hidden-columns)
 - [ ] Move dump components from feature to shared
 - [ ] Use Nx tags to set boundary rules
 - [ ] Move ui service to feature lib
-- [ ] IService -> Service --> service.ts and Service -> ServiceImpl --> service.impl.ts
 - [ ] Use takeUntil for the subscription in login page
+Hard
+- [ ] IService -> Service --> service.ts and Service -> ServiceImpl --> service.impl.ts
 - [ ] Replace toPromise with better solution
-- [ ] Research RxState and ComponentStore to remove subscriptions in components
-- [ ] Seperate libs into 2 folders: client & api (apply for shared and domain libs) - use @nrwl/workspace:move schematic
-- [ ] Change lib name from 'api-interfaces' to 'abstract'
 - [ ] Remove I prefix for abstract classes
 - [ ] Research about Query Relationship and Roundtrip in Database
-- [ ] Apply Chau Tran's structure (https://gist.github.com/nartc/899c7da9aa96b7bd6515e0c5e90124bc?fbclid=IwAR0NsGgl_EigI7Rl_VYq9MWyl4dvbNCdKpN5sddPbwPqloD0AONcbbiCHh0)
+Dificult
+- [ ] Research Ngrx, RxState and ComponentStore to remove subscriptions in components
+- [ ] Apply Chau Tran's structure - use @nrwl/workspace:move schematic (https://gist.github.com/nartc/899c7da9aa96b7bd6515e0c5e90124bc?fbclid=IwAR0NsGgl_EigI7Rl_VYq9MWyl4dvbNCdKpN5sddPbwPqloD0AONcbbiCHh0 and https://gist.github.com/trungk18/7ef8766cafc05bc8fd87be22de6c5b12)
 
 > ### [Nx monorepo](https://nx.dev) with [Nestjs](https://nestjs.com) and [Angular](https://angular.io) codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.
 
