@@ -3,12 +3,12 @@
   <a routerLink="/register">Need an account?</a>
 </p>
 
-<form (ngSubmit)="form.valid && login()" [formGroup]="form">
+<form data-cy="login-form" (ngSubmit)="form.valid && login()" [formGroup]="form">
   <fieldset class="form-group">
-    <input class="form-control form-control-lg" type="text" placeholder="Email" formControlName="email" name="email">
+    <input class="form-control form-control-lg" data-cy="email" type="text" placeholder="Email" formControlName="email" name="email">
   </fieldset>
   <fieldset class="form-group">
-    <input class="form-control form-control-lg" type="password" placeholder="Password" formControlName="password" name="password">
+    <input class="form-control form-control-lg" data-cy="password" type="password" placeholder="Password" formControlName="password" name="password">
   </fieldset>
   <button class="btn btn-lg btn-primary pull-xs-right" type="submit">
     Sign in

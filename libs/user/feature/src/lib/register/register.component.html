@@ -6,13 +6,13 @@
 <form (ngSubmit)="form.valid && submit()" [formGroup]="form">
   <fieldset class="form-group">
     <input class="form-control form-control-lg" type="text" placeholder="Username" formControlName="username"
-      name="username">
+      name="username" data-cy="username">
   </fieldset>
   <fieldset class="form-group">
-    <input class="form-control form-control-lg" type="text" placeholder="Email" formControlName="email" name="email">
+    <input class="form-control form-control-lg" type="text" placeholder="Email" formControlName="email" data-cy="email" name="email">
   </fieldset>
   <fieldset class="form-group">
-    <input class="form-control form-control-lg" type="password" placeholder="Password" formControlName="password"
+    <input class="form-control form-control-lg" type="password" placeholder="Password" formControlName="password" data-cy="password"
       name="password">
   </fieldset>
   <button class="btn btn-lg btn-primary pull-xs-right" type="submit">
