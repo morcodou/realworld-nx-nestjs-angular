@@ -45,4 +45,33 @@ describe('New Article on Conduit', () => {
     cy.url().should('include', `/#/article/${title}`);
   });
 
+  it('should add favorite article', () => {
+
+    cy.getByDataName('title').type(title);
+    cy.getByDataName('description').type(description);
+    cy.getByDataName('article').type(article);
+    cy.getByDataName('tagList').type(`${tagList}`);
+
+    cy.getByDataName('edit-article-form').submit();
+
+    cy.getByDataName('article-title-header').should("have.text", title);
+    cy.url().should('include', `/#/article/${title}`);
+
+    cy.wait(1500);
+    cy.getByDataName('user-profile').click();
+    cy.location('hash').should('equal', '#/@user1');
+    cy.getByDataName('article-preview').should("have.length", 1)
+      .first()
+      .getByDataName("favorite-article").as('Favorite');
+
+    cy.get('@Favorite').should("have.text", " 0 ");
+    cy.get('@Favorite').click();
+    cy.get('@Favorite').should("have.text", " 1 ");
+
+    cy.getByDataName('favorited-articles').click();
+    cy.getByDataName('article-preview').should("have.length", 1);
+    cy.contains('.article-preview', title);
+
+  });
+
 });

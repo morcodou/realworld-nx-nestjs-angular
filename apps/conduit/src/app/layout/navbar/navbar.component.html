@@ -22,7 +22,7 @@
         <a class="nav-link" data-cy="register" routerLink="/register" *ngIf="!isAuth">Sign up</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="'/@'+user?.username" *ngIf="isAuth">
+        <a data-cy="user-profile" class="nav-link" [routerLink]="'/@'+user?.username" *ngIf="isAuth">
           <img *ngIf="user?.image" [src]="user?.image" class="user-pic">
           {{user?.username}}
         </a>

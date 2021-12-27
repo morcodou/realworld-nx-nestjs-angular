@@ -1,4 +1,4 @@
-<div class="profile-page" data-cy="user-profile">
+<div class="profile-page" data-cy="user-profile-info">
     <div class="user-info">
         <div class="container">
             <div class="row">
@@ -45,7 +45,7 @@
                                 >My Articles</a>
                         </li>
                         <li class="nav-item">
-                            <a 
+                            <a  data-cy="favorited-articles"
                                 class="nav-link" 
                                 [class.active]="tabType==='favoritedArticles'"
                                 [routerLink]="['/@' + profile?.username + '/favorites']"
