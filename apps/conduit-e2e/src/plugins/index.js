@@ -12,6 +12,7 @@
 // the project's config changing)
 
 const { preprocessTypescript } = require('@nrwl/cypress/plugins/preprocessor');
+const { knex } = require("knex");
 
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
@@ -19,4 +20,61 @@ module.exports = (on, config) => {
 
   // Preprocess Typescript file using Nx helper
   on('file:preprocessor', preprocessTypescript(config));
+
+  on('task', {
+
+    cleanDatabase() {
+      const database = knex({
+        client: 'mysql',
+        connection: {
+          host: 'localhost',
+          port: 3306,
+          user: 'mysqluser',
+          password: 'P@ssw0rd!',
+          database: 'realworld_db'
+        }
+      });
+
+      const onError = err => err.toString().includes('no such table') ? null : Promise.reject(err)
+
+      return Promise.all([
+        database
+          .truncate('article')
+          .catch(onError),
+        database
+          .truncate('comment')
+          .catch(onError),
+        database
+          .truncate('favorite')
+          .catch(onError),
+        database
+          .truncate('tag')
+          .catch(onError),
+        database
+          .truncate('follow')
+          .catch(onError),
+      ]);
+    },
+
+    cleanUserVisitor() {
+      const database = knex({
+        client: 'mysql',
+        connection: {
+          host: 'localhost',
+          port: 3306,
+          user: 'mysqluser',
+          password: 'P@ssw0rd!',
+          database: 'realworld_db'
+        }
+      });
+
+      return Promise.all([
+        database.table('user')
+          .where('email', 'visitor@email.com')
+          .del()
+      ]);
+    }
+
+  });
+
 };

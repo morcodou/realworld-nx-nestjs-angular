@@ -32,7 +32,7 @@
     </ng-container>
     
     <ng-template #editDelete>
-        <a 
+        <a  data-cy="edit-article"
             class="btn btn-sm btn-outline-primary"
             [routerLink]="['/editor', article?.slug]"
             [state]="{data: article}"
