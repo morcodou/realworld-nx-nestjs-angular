@@ -1,0 +1,30 @@
+{
+  "success":true,
+  "statusCode":200,
+  "listData":[
+     {
+        "id":"03b6107a-6ba1-4870-af38-ff2a12f049cd",
+        "createdAt":"2021-12-27T23:42:41.180Z",
+        "updatedAt":"2021-12-27T23:42:41.180Z",
+        "deletedDate":null,
+        "slug":"asddd-1640666561178",
+        "title":"asddd",
+        "description":"ww",
+        "body":"sssssss",
+        "authorId":"d9cc584d-8694-4546-883a-e11fecf1d98c",
+        "tagList":[
+           "eeeeee"
+        ],
+        "favorited":false,
+        "favoritesCount":0,
+        "author":{
+           "username":"user1",
+           "bio":"my bio",
+           "image":"https://images2.minutemediacdn.com/image/upload/c_crop,h_1350,w_2400,x_0,y_303/f_auto,q_auto,w_1100/v1576269707/shape/mentalfloss/610356-gettyimages-1018078858.jpg",
+           "following":false,
+           "createdAt":"2021-03-30T23:46:11.000Z"
+        }
+     }
+  ],
+  "total":1
+}

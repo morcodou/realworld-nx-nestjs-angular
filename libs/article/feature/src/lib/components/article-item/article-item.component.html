@@ -14,7 +14,7 @@
             <i class="ion-heart"></i> {{article?.favoritesCount || 0}}
         </button>
     </div>
-    <a [routerLink]="['/article', article?.slug]" [state]="{data: article}" class="preview-link">
+    <a data-cy="article-preview-link" [routerLink]="['/article', article?.slug]" [state]="{data: article}" class="preview-link">
         <h1>{{article?.title}}</h1>
         <p>{{article?.description}}</p>
         <span>Read more...</span>

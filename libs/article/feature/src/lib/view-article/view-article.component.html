@@ -58,7 +58,7 @@
 
                 <div class="card" *ngFor="let c of comments">
                     <div class="card-block">
-                        <p class="card-text">{{c?.body}}</p>
+                        <p data-cy="card-comment-body" class="card-text">{{c?.body}}</p>
                     </div>
                     <div class="card-footer">
                         <a [routerLink]="'/@'+c?.author?.username" class="comment-author">
