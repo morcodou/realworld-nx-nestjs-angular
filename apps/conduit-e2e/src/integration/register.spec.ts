@@ -12,11 +12,14 @@ describe('Register', () => {
     cy.contains('a.nav-link', 'Sign up').click();
     cy.location('hash').should('equal', '#/register')
 
+    cy.screenshot('screenshot1');
+
     cy.get('[data-cy=username]').type(username);
     cy.get('[data-cy=email]').type(email);
     cy.get('[data-cy=password]').type(password);
 
     cy.get('form').submit();
+    cy.screenshot('screenshot2');
 
     cy.location('pathname').should('equal', '/');
 
