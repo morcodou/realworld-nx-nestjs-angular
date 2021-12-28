@@ -21,6 +21,11 @@ module.exports = (on, config) => {
   // Preprocess Typescript file using Nx helper
   on('file:preprocessor', preprocessTypescript(config));
 
+
+  require('../use-browserify-istanbul');
+  
+  require('@cypress/code-coverage/task')(on, config);
+
   on('task', {
 
     cleanDatabase() {
@@ -77,4 +82,5 @@ module.exports = (on, config) => {
 
   });
 
+  return config;
 };

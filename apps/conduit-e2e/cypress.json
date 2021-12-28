@@ -8,5 +8,11 @@
   "video": true,
   "videosFolder": "../../dist/cypress/apps/conduit-e2e/videos",
   "screenshotsFolder": "../../dist/cypress/apps/conduit-e2e/screenshots",
-  "chromeWebSecurity": false
+  "chromeWebSecurity": false,
+  "baseUrl": "http://localhost:3333",
+  "env": {
+    "codeCoverage": {
+      "url": "http://localhost:3333/__coverage__"
+    }
+  }
 }

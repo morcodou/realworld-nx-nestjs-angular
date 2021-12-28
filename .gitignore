@@ -40,3 +40,5 @@ Thumbs.db
 
 migrations/*.js
 log
+apps/conduit-e2e/.nyc_output/**
+apps/conduit-e2e/coverage/**
